@@ -2,16 +2,16 @@
 /**
  * trait object to store data or models and allows to easily access to object
  *
- * @package     ClassKernel
+ * @package     BlueData
  * @subpackage  Base
  * @author      Michał Adamiak    <chajr@bluetree.pl>
- * @copyright   chajr/bluetree
- * @link https://github.com/chajr/class-kernel/wiki/ClassKernel_Base_BlueObject BlueObject class documentation
+ * @copyright   bluetree-service
+ * @link https://github.com/bluetree-service/data/wiki/ClassKernel_Base_BlueObject BlueObject class documentation
  */
-namespace ClassKernel\Base;
+namespace BlueData\Base;
 
-use ClassKernel\Data\Object;
-use ClassKernel\Data\Xml;
+use BlueData\Data\Object;
+use BlueData\Data\Xml;
 use stdClass;
 use DOMException;
 use DOMElement;
@@ -1009,7 +1009,7 @@ trait BlueObject
     /**
      * allow to join two blue objects into one
      *
-     * @param \ClassKernel\Data\Object $object
+     * @param \BlueData\Data\Object $object
      * @return $this
      */
     public function mergeBlueObject(Object $object)

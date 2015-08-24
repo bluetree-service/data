@@ -1,6 +1,6 @@
 <?php
 
-namespace ClassKernel\Test;
+namespace BlueData\Test;
 
 class SerializeFail implements \Serializable
 {

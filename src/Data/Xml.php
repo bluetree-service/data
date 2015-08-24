@@ -2,13 +2,13 @@
 /**
  * extend DOMDocument to use framework xml configuration files
  *
- * @package     ClassKernel
+ * @package     BlueData
  * @subpackage  Data
  * @author      Michał Adamiak    <chajr@bluetree.pl>
- * @copyright   chajr/bluetree
- * @link https://github.com/chajr/class-kernel/wiki/ClassKernel_Data_Xml Xml class documentation
+ * @copyright   bluetree-service
+ * @link https://github.com/bluetree-service/data/wiki/BlueData_Data_Xml Xml class documentation
  */
-namespace ClassKernel\Data;
+namespace BlueData\Data;
 
 use DOMDocument;
 use DOMNodeList;
@@ -17,7 +17,6 @@ use DOMNamedNodeMap;
 use DOMDocumentType;
 use DOMImplementation;
 use DomElement;
-use ClassKernel\Base\Register;
 
 class Xml extends DOMDocument
 {
@@ -155,8 +154,6 @@ class Xml extends DOMDocument
      */
     public function __construct(array $options = [])
     {
-        Register::tracer('start xml class', debug_backtrace(), '7E3A02');
-
         $this->_options = array_merge($this->_options, $options);
 
         parent::__construct(
@@ -175,8 +172,6 @@ class Xml extends DOMDocument
      */
     public function loadXmlFile($url, $parse = false)
     {
-        Register::tracer('load xml file', debug_backtrace(), '7E3A02');
-
         $this->preserveWhiteSpace    = false;
         $bool                        = @file_exists($url);
 
@@ -211,8 +206,6 @@ class Xml extends DOMDocument
      */
     public function saveXmlFile($url, $asString = false)
     {
-        Register::tracer('save xml file', debug_backtrace(), '7E3A02');
-
         $this->formatOutput = true;
 
         if ($url) {

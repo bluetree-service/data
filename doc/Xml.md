@@ -1,2 +1,2 @@
-# Using ClassKernel\Data\Xml class
-* [ClassKernel\Data\Xml](https://github.com/chajr/class-kernel/wiki/ClassKernel_Data_Xml)
+# Using BlueData\Data\Xml class
+* [BlueData\Data\Xml](https://github.com/bluetree-service/data/wiki/BlueData_Data_Xml)

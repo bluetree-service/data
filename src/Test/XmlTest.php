@@ -2,14 +2,14 @@
 /**
  * test Xml
  *
- * @package     ClassKernel
+ * @package     BlueData
  * @subpackage  Test
  * @author      Michał Adamiak    <chajr@bluetree.pl>
- * @copyright   chajr/bluetree
+ * @copyright   bluetree-service
  */
 namespace Test;
 
-use ClassKernel\Data\Xml;
+use BlueData\Data\Xml;
 
 class XmlTest extends \PHPUnit_Framework_TestCase
 {

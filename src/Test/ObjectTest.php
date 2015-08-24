@@ -2,14 +2,14 @@
 /**
  * test BlueObject using Object class
  *
- * @package     ClassKernel
+ * @package     BlueData
  * @subpackage  Test
  * @author      Michał Adamiak    <chajr@bluetree.pl>
- * @copyright   chajr/bluetree
+ * @copyright   bluetree-service
  */
 namespace Test;
 
-use ClassKernel\Data\Object;
+use BlueData\Data\Object;
 use Zend\Serializer\Serializer;
 use StdClass;
 
@@ -1325,7 +1325,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
     public function testSerializeWithException()
     {
         $instance = new Object;
-        $instance->set('object', new \ClassKernel\Test\SerializeFail);
+        $instance->set('object', new \BlueData\Test\SerializeFail);
         $instance->serialize();
 
         $this->assertTrue($instance->checkErrors());
@@ -1552,7 +1552,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
      * 
      * @param mixed $first
      * @param mixed $second
-     * @return \ClassKernel\Data\Object
+     * @return \BlueData\Data\Object
      */
     protected function _simpleObject($first, $second)
     {
