@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="class-kernel">
+        <testsuite name="bluetree-data">
             <directory>src/Test</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/Data</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="tmp/coverage.xml"/>
+    </logging>
 </phpunit>

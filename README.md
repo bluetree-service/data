@@ -11,17 +11,13 @@ Bluetree Service Data
 Main files for all class libraries. Include classes to use BlueObject as trait and
 independent Object with xml data handling. Also allow to use Register to create
 objects and singletons. That package is base package for all Class libraries, but
-also can be used independent.  
-Its recommended to use packages `ClassEvents` and optionally `ClassBenchmark`.
+also can be used independent.
 
 ### Included libraries
-* **BlueData\Base\BlueObject** - trait class to store data as object
-* **BlueData\Data\Object** - include BlueObject trait for create object
 * **BlueData\Data\Xml** - extends DOMDocument to handle xml data
 
 Documentation
 --------------
-* [BlueData\Base\BlueObject](https://github.com/bluetree-service/data/wiki/BlueData_Base_BlueObject "BlueObject and Object")
 * [BlueData\Data\Xml](https://github.com/bluetree-service/data/wiki/BlueData_Data_Xml "Xml")
 
 Install via Composer

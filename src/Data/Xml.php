@@ -258,7 +258,7 @@ class Xml extends DOMDocument
         DOMNodeList $node,
         $value,
         array $list = []
-    ){
+    ) {
         /** @var DomElement $child */
         foreach ($node as $child) {
             if($child->nodeType === 1){
