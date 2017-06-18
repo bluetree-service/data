@@ -8,6 +8,10 @@
 ### Changed
 * Changelog moved into doc folder
 * Changed tests directory
+* Updated PHPUnit usage
+
+### Delete
+* removed support for PHP 5.4 from travis config
 
 ## 0.1.0.0 - 2015-09-22
 ### Changed

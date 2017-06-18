@@ -10,8 +10,9 @@
 namespace Test;
 
 use BlueData\Data\Xml;
+use PHPUnit\Framework\TestCase;
 
-class XmlTest extends \PHPUnit_Framework_TestCase
+class XmlTest extends TestCase
 {
     /**
      * test creating new xml object
