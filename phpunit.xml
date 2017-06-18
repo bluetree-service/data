@@ -2,7 +2,7 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="bluetree-data">
-            <directory>src/Test</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
