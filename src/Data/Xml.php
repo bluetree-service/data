@@ -6,16 +6,11 @@
  * @subpackage  Data
  * @author      Michał Adamiak    <chajr@bluetree.pl>
  * @copyright   bluetree-service
- * @link https://github.com/bluetree-service/data/wiki/BlueData_Data_Xml Xml class documentation
  */
 namespace BlueData\Data;
 
 use DOMDocument;
 use DOMNodeList;
-use DOMNode;
-use DOMNamedNodeMap;
-use DOMDocumentType;
-use DOMImplementation;
 use DomElement;
 
 class Xml extends DOMDocument
@@ -25,12 +20,6 @@ class Xml extends DOMDocument
      * @var DOMElement
      */
     public $documentElement;
-
-    /**
-     * node name
-     * @var string
-     */
-    public $nodeName;
 
     /**
      * node type
@@ -48,103 +37,31 @@ class Xml extends DOMDocument
     public $nodeType;
 
     /**
-     * node value
-     * @var mixed
-     */
-    public $nodeValue;
-
-    /**
-     * parent node
-     * @var DOMNode
-     */
-    public $parentNode;
-
-    /**
      * child nodes collection
      * @var DOMNodeList
      */
     public $childNodes;
 
     /**
-     * first child node
-     * @var DOMNode
-     */
-    public $firstChild;
-
-    /**
-     * last child node
-     * @var DOMNode
-     */
-    public $lastChild;
-
-    /**
-     * collection of attributes
-     * @var DOMNamedNodeMap
-     */
-    public $attributes;
-
-    /**
-     * next node in collection
-     * @var DOMNode
-     */
-    public $nextSibling;
-
-    /**
-     * previous node in collection
-     * @var DOMNode
-     */
-    public $previousSibling;
-
-    /**
-     * namespace fo current node
-     * @var string
-     */
-    public $namespaceURI;
-
-    /**
-     * reference node object
-     * @var DOMDocument
-     */
-    public $ownerDocument;
-
-    /**
-     * number of elements in collection
-     * @var integer
-     */
-    public $length;
-
-    /**
-     * DTD, if return documentType object
-     * @var DOMDocumentType
-     */
-    public $doctype;
-
-    /**
-     * document, implementation type, compatible with document mime type
-     * @var DOMImplementation
-     */
-    public $implementation;
-
-    /**
      * error information
      * @var string
      */
-    public $_error = null;
+    public $error = null;
 
     /**
      * last free id
      * @var string
      */
-    protected $_idList;
+    protected $idList;
 
     /**
      * default constructor options
      *
      * @var array
      */
-    protected $_options = [
-        'version'   => '1.0',
-        'encoding'  => 'UTF-8'
+    protected $options = [
+        'version' => '1.0',
+        'encoding' => 'UTF-8'
     ];
 
     /**
@@ -154,11 +71,11 @@ class Xml extends DOMDocument
      */
     public function __construct(array $options = [])
     {
-        $this->_options = array_merge($this->_options, $options);
+        $this->options = array_merge($this->options, $options);
 
         parent::__construct(
-            $this->_options['version'],
-            $this->_options['encoding']
+            $this->options['version'],
+            $this->options['encoding']
         );
     }
 
@@ -172,22 +89,22 @@ class Xml extends DOMDocument
      */
     public function loadXmlFile($url, $parse = false)
     {
-        $this->preserveWhiteSpace    = false;
-        $bool                        = @file_exists($url);
+        $this->preserveWhiteSpace = false;
+        $bool = file_exists($url);
 
         if (!$bool) {
-            $this->_error = 'file_not_exists';
+            $this->error = 'file_not_exists';
             return false;
         }
 
         $bool = $this->load($url);
         if (!$bool) {
-            $this->_error = 'loading_file_error';
+            $this->error = 'loading_file_error';
             return false;
         }
 
-        if ($parse && !@$this->validate()) {
-            $this->_error = 'parse_file_error';
+        if ($parse && !$this->validate()) {
+            $this->error = 'parse_file_error';
             return false;
         }
 
@@ -200,7 +117,7 @@ class Xml extends DOMDocument
      * @param string $url xml file path
      * @param boolean $asString if true return as string
      * @return string|boolean
-     * 
+     *
      * @example saveXmlFile('path/filename.xml'); save to file
      * @example saveXmlFile(false, true) will return as simple text
      */
@@ -211,7 +128,7 @@ class Xml extends DOMDocument
         if ($url) {
             $bool = $this->save($url);
             if (!$bool) {
-                $this->_error = 'save_file_error';
+                $this->error = 'save_file_error';
                 return false;
             }
         }
@@ -233,13 +150,13 @@ class Xml extends DOMDocument
         $root = $this->documentElement;
 
         if ($root->hasChildNodes()) {
-            $tab    = $this->_searchByAttribute($root->childNodes, 'id');
-            $tab[]  = 'create_new_free_id';
-            $id     = array_keys($tab, 'create_new_free_id');
+            $tab = $this->searchByAttributeRecurrent($root->childNodes, 'id');
+            $tab[] = 'create_new_free_id';
+            $idList = array_keys($tab, 'create_new_free_id');
 
             unset($tab);
-            $this->_idList = $id;
-            return $id[0];
+            $this->idList = $idList;
+            return reset($idList);
         }
 
         return null;
@@ -254,26 +171,25 @@ class Xml extends DOMDocument
      * @param array|boolean $list list of find nodes for recurrence
      * @return array
      */
-    protected function _searchByAttribute(
+    protected function searchByAttributeRecurrent(
         DOMNodeList $node,
         $value,
         array $list = []
     ) {
         /** @var DomElement $child */
         foreach ($node as $child) {
-            if($child->nodeType === 1){
-
+            if ($child->nodeType === 1) {
                 if ($child->hasChildNodes()) {
-                    $list = $this->_searchByAttribute(
+                    $list = $this->searchByAttributeRecurrent(
                         $child->childNodes,
                         $value,
                         $list
                     );
                 }
 
-                $id = $child->getAttribute($value);
-                if ($id) {
-                    $list[$id] = $child;
+                $attribute = $child->getAttribute($value);
+                if ($attribute) {
+                    $list[$attribute] = $child;
                 }
             }
         }
@@ -290,20 +206,18 @@ class Xml extends DOMDocument
      */
     public function searchByAttribute(DOMNodeList $node, $value)
     {
-        return $this->_searchByAttribute($node, $value);
+        return $this->searchByAttributeRecurrent($node, $value);
     }
 
     /**
      * check that element with given id exists
      *
-     * @param string $id
+     * @param string $elementId
      * @return boolean return true if exists
      */
-    public function checkId($id)
+    public function checkId($elementId)
     {
-        $id = $this->getElementById($id);
-
-        if ($id) {
+        if ($this->getElementById($elementId)) {
             return true;
         } else {
             return false;
@@ -313,23 +227,22 @@ class Xml extends DOMDocument
     /**
      * shorter version to return element with given id
      *
-     * @param string $id
+     * @param string $elementId
      * @return DOMElement
      */
-    public function getId($id)
+    public function getId($elementId)
     {
-        $id = $this->getElementById($id);
-        return $id;
+        return $this->getElementById($elementId);
     }
 
     /**
      * check that Xml object has error
-     * 
+     *
      * @return bool
      */
     public function hasErrors()
     {
-        if ($this->_error) {
+        if ($this->error) {
             return true;
         }
 
@@ -338,28 +251,28 @@ class Xml extends DOMDocument
 
     /**
      * clear error information
-     * 
+     *
      * @return Xml
      */
     public function clearErrors()
     {
-        $this->_error = null;
+        $this->error = null;
         return $this;
     }
 
     /**
      * return error code
-     * 
+     *
      * @return string
      */
     public function getError()
     {
-        return $this->_error;
+        return $this->error;
     }
 
     /**
      * return xml string
-     * 
+     *
      * @return bool|string
      */
     public function __toString()
