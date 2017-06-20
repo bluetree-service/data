@@ -82,28 +82,28 @@ class Xml extends DOMDocument
     /**
      * load xml file, optionally check file DTD
      *
-     * @param string $url xml file path
+     * @param string $path xml file path
      * @param boolean $parse if true will check file DTD
      * @return boolean
      * @example loadXmlFile('cfg/config.xml', true)
      */
-    public function loadXmlFile($url, $parse = false)
+    public function loadXmlFile($path, $parse = false)
     {
         $this->preserveWhiteSpace = false;
-        $bool = file_exists($url);
+        $bool = file_exists($path);
 
         if (!$bool) {
             $this->error = 'file_not_exists';
             return false;
         }
 
-        $bool = $this->load($url);
+        $bool = @$this->load($path);
         if (!$bool) {
             $this->error = 'loading_file_error';
             return false;
         }
 
-        if ($parse && !$this->validate()) {
+        if ($parse && !@$this->validate()) {
             $this->error = 'parse_file_error';
             return false;
         }
@@ -114,30 +114,27 @@ class Xml extends DOMDocument
     /**
      * save xml file, optionally will return as string
      *
-     * @param string $url xml file path
-     * @param boolean $asString if true return as string
+     * @param string $path xml file path
      * @return string|boolean
      *
      * @example saveXmlFile('path/filename.xml'); save to file
-     * @example saveXmlFile(false, true) will return as simple text
+     * @example saveXmlFile() will return as simple text
      */
-    public function saveXmlFile($url, $asString = false)
+    public function saveXmlFile($path = '')
     {
         $this->formatOutput = true;
 
-        if ($url) {
-            $bool = $this->save($url);
+        if ($path) {
+            $bool = $this->save($path);
             if (!$bool) {
                 $this->error = 'save_file_error';
                 return false;
             }
+
+            return true;
         }
 
-        if ($asString) {
-            return $this->saveXML();
-        }
-
-        return true;
+        return $this->saveXML();
     }
 
     /**
