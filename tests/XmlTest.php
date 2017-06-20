@@ -68,8 +68,9 @@ class XmlTest extends TestCase
         $this->assertFileExists($testFile, 'test file don\'t exists');
 
         $xml = new Xml;
-        $xml->loadXmlFile($testFile);
+        $loaded = $xml->loadXmlFile($testFile);
 
+        $this->assertTrue($loaded);
         $this->assertFalse($xml->hasErrors());
 
         $root = $xml->documentElement;
@@ -77,5 +78,94 @@ class XmlTest extends TestCase
             'lorem ipsum',
             $root->getElementsByTagName('sub')->item(0)->nodeValue
         );
+    }
+
+    public function testFileLoadingWithParse()
+    {
+        $testFile = 'tests/data/source_dtd.xml';
+        $this->assertFileExists($testFile, 'test file don\'t exists');
+
+        $xml = new Xml;
+        $loaded = $xml->loadXmlFile($testFile, true);
+
+        $this->assertTrue($loaded);
+        $this->assertFalse($xml->hasErrors());
+    }
+
+    public function testLoadingNoneExistingFile()
+    {
+        $testFile = 'tests/data/none_exists.xml';
+        $this->assertFileNotExists($testFile, 'test file exists');
+
+        $xml = new Xml;
+        $loaded = $xml->loadXmlFile($testFile);
+
+        $this->assertFalse($loaded);
+        $this->assertTrue($xml->hasErrors());
+        $this->assertEquals('file_not_exists', $xml->getError());
+    }
+
+    public function testLoadingBrokenXml()
+    {
+        $testFile = 'tests/data/source_broken.xml';
+        $this->assertFileExists($testFile, 'test file don\'t exists');
+
+        $xml = new Xml;
+        $loaded = $xml->loadXmlFile($testFile);
+
+        $this->assertFalse($loaded);
+        $this->assertTrue($xml->hasErrors());
+        $this->assertEquals('loading_file_error', $xml->getError());
+    }
+
+    public function testLoadingNoneValidXml()
+    {
+        $testFile = 'tests/data/source.xml';
+        $this->assertFileExists($testFile, 'test file don\'t exists');
+
+        $xml = new Xml;
+        $loaded = $xml->loadXmlFile($testFile, true);
+
+        $this->assertFalse($loaded);
+        $this->assertTrue($xml->hasErrors());
+        $this->assertEquals('parse_file_error', $xml->getError());
+
+        $this->assertFalse($xml->clearErrors()->hasErrors());
+    }
+
+    public function testSaveXmlAsString()
+    {
+        
+    }
+
+    public function testSaveXmlAsFile()
+    {
+        
+    }
+
+    public function testSaveXmlWithError()
+    {
+        
+    }
+
+    public function testGenerateFreeId()
+    {
+        //has child nodes
+        //don't have child nodes
+    }
+
+    public function testThatIdExists()
+    {
+        
+    }
+
+    public function testGetElementById()
+    {
+        
+    }
+
+    public function testToString()
+    {
+        
     }
 }
