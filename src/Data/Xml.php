@@ -274,6 +274,6 @@ class Xml extends DOMDocument
      */
     public function __toString()
     {
-        return $this->saveXmlFile(false, true);
+        return $this->saveXmlFile();
     }
 }
