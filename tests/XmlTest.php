@@ -14,12 +14,11 @@ use PHPUnit\Framework\TestCase;
 
 class XmlTest extends TestCase
 {
-    const BASE_DIR = 'tests/data/';
     const XML_TEST_FILE = 'tmp/test.xml';
-    const XML_EXPECTED = self::BASE_DIR . 'expected.xml';
-    const XML_SOURCE = self::BASE_DIR . 'source.xml';
-    const XML_DTD = self::BASE_DIR . 'source_dtd.xml';
-    const XML_BROKEN = self::BASE_DIR . 'source_broken.xml';
+    const XML_EXPECTED = 'tests/data/expected.xml';
+    const XML_SOURCE = 'tests/data/source.xml';
+    const XML_DTD = 'tests/data/source_dtd.xml';
+    const XML_BROKEN = 'tests/data/source_broken.xml';
     const XML_NO_EXISTS = 'none_exists.xml';
 
     /**
