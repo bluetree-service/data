@@ -14,6 +14,24 @@ use PHPUnit\Framework\TestCase;
 
 class XmlTest extends TestCase
 {
+    const BASE_DIR = 'tests/data/';
+    const XML_TEST_FILE = 'tmp/test.xml';
+    const XML_EXPECTED = self::BASE_DIR . 'expected.xml';
+    const XML_SOURCE = self::BASE_DIR . 'source.xml';
+    const XML_DTD = self::BASE_DIR . 'source_dtd.xml';
+    const XML_BROKEN = self::BASE_DIR . 'source_broken.xml';
+    const XML_NO_EXISTS = 'none_exists.xml';
+
+    /**
+     * @var string
+     */
+    protected $xmlTestFilePath;
+
+    public function setUp()
+    {
+        $this->tearDown();
+    }
+
     /**
      * test creating new xml object
      */
@@ -36,22 +54,8 @@ class XmlTest extends TestCase
      */
     public function testSearchByAttributeAccess()
     {
-        $xml    = new Xml();
-        $root   = $xml->createElement('root');
+        $xml = $this->createSimpleXml();
 
-        $testNode = $xml->createElement('test');
-        $testNode->setAttribute('attr', 'a');
-        $root->appendChild($testNode);
-
-        $testNode = $xml->createElement('test');
-        $testNode->setAttribute('attr', 'b');
-        $root->appendChild($testNode);
-
-        $testNode = $xml->createElement('test');
-        $testNode->setAttribute('attr', 'c');
-        $root->appendChild($testNode);
-
-        $xml->appendChild($root);
         $list = $xml->searchByAttribute($xml->childNodes, 'attr');
 
         $this->assertArrayHasKey('a', $list);
@@ -64,11 +68,10 @@ class XmlTest extends TestCase
      */
     public function testFileLoading()
     {
-        $testFile = 'tests/data/source.xml';
-        $this->assertFileExists($testFile, 'test file don\'t exists');
+        $this->assertFileExists(self::XML_SOURCE, 'test file don\'t exists');
 
         $xml = new Xml;
-        $loaded = $xml->loadXmlFile($testFile);
+        $loaded = $xml->loadXmlFile(self::XML_SOURCE);
 
         $this->assertTrue($loaded);
         $this->assertFalse($xml->hasErrors());
@@ -82,11 +85,10 @@ class XmlTest extends TestCase
 
     public function testFileLoadingWithParse()
     {
-        $testFile = 'tests/data/source_dtd.xml';
-        $this->assertFileExists($testFile, 'test file don\'t exists');
+        $this->assertFileExists(self::XML_DTD, 'test file don\'t exists');
 
         $xml = new Xml;
-        $loaded = $xml->loadXmlFile($testFile, true);
+        $loaded = $xml->loadXmlFile(self::XML_DTD, true);
 
         $this->assertTrue($loaded);
         $this->assertFalse($xml->hasErrors());
@@ -94,11 +96,10 @@ class XmlTest extends TestCase
 
     public function testLoadingNoneExistingFile()
     {
-        $testFile = 'tests/data/none_exists.xml';
-        $this->assertFileNotExists($testFile, 'test file exists');
+        $this->assertFileNotExists(self::XML_NO_EXISTS, 'test file exists');
 
         $xml = new Xml;
-        $loaded = $xml->loadXmlFile($testFile);
+        $loaded = $xml->loadXmlFile(self::XML_NO_EXISTS);
 
         $this->assertFalse($loaded);
         $this->assertTrue($xml->hasErrors());
@@ -107,11 +108,10 @@ class XmlTest extends TestCase
 
     public function testLoadingBrokenXml()
     {
-        $testFile = 'tests/data/source_broken.xml';
-        $this->assertFileExists($testFile, 'test file don\'t exists');
+        $this->assertFileExists(self::XML_BROKEN, 'test file don\'t exists');
 
         $xml = new Xml;
-        $loaded = $xml->loadXmlFile($testFile);
+        $loaded = $xml->loadXmlFile(self::XML_BROKEN);
 
         $this->assertFalse($loaded);
         $this->assertTrue($xml->hasErrors());
@@ -120,11 +120,10 @@ class XmlTest extends TestCase
 
     public function testLoadingNoneValidXml()
     {
-        $testFile = 'tests/data/source.xml';
-        $this->assertFileExists($testFile, 'test file don\'t exists');
+        $this->assertFileExists(self::XML_SOURCE, 'test file don\'t exists');
 
         $xml = new Xml;
-        $loaded = $xml->loadXmlFile($testFile, true);
+        $loaded = $xml->loadXmlFile(self::XML_SOURCE, true);
 
         $this->assertFalse($loaded);
         $this->assertTrue($xml->hasErrors());
@@ -135,12 +134,19 @@ class XmlTest extends TestCase
 
     public function testSaveXmlAsString()
     {
-        
+        $xmlString = $this->createSimpleXml()
+            ->saveXmlFile();
+
+        $this->assertEquals(file_get_contents(self::XML_EXPECTED), $xmlString);
     }
 
     public function testSaveXmlAsFile()
     {
-        
+        $val = $this->createSimpleXml()
+            ->saveXmlFile(self::XML_TEST_FILE);
+
+        $this->assertTrue($val);
+        $this->assertFileExists(self::XML_TEST_FILE);
     }
 
     public function testSaveXmlWithError()
@@ -167,5 +173,37 @@ class XmlTest extends TestCase
     public function testToString()
     {
         
+    }
+
+    public function tearDown()
+    {
+        if (file_exists(self::XML_TEST_FILE)) {
+            unlink(self::XML_TEST_FILE);
+        }
+    }
+
+    /**
+     * @return Xml
+     */
+    protected function createSimpleXml()
+    {
+        $xml = new Xml;
+        $root = $xml->createElement('root');
+
+        $testNode = $xml->createElement('test');
+        $testNode->setAttribute('attr', 'a');
+        $root->appendChild($testNode);
+
+        $testNode = $xml->createElement('test');
+        $testNode->setAttribute('attr', 'b');
+        $root->appendChild($testNode);
+
+        $testNode = $xml->createElement('test');
+        $testNode->setAttribute('attr', 'c');
+        $root->appendChild($testNode);
+
+        $xml->appendChild($root);
+
+        return $xml;
     }
 }
