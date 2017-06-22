@@ -2,27 +2,29 @@
 /**
  * contains some helpful mathematics models
  *
- * @package     Core
- * @subpackage  Math
- * @author      chajr   <chajr@bluetree.pl>
+ * @package     BlueData
+ * @subpackage  Data
+ * @author      Michał Adamiak    <chajr@bluetree.pl>
+ * @copyright   bluetree-service
  */
-namespace Core\Blue\Helper;
+namespace BlueData\Calculation;
+
 class Math
 {
     /**
      * Calculates percent difference between two numbers
-     * 
+     *
      * @param int|float $from
-     * @param int|float $to
+     * @param int|float $into
      * @return int|float
      */
-    static function getPercentDifference($from, $to)
+    public static function getPercentDifference($from, $into)
     {
-        if ($to === 0) {
-            return FALSE;
+        if ($into === 0) {
+            return false;
         }
 
-        return 100 - (($to / $from) *100);
+        return 100 - (($into / $from) *100);
     }
 
     /**
@@ -30,12 +32,12 @@ class Math
      *
      * @param float $part value that is percent of other value
      * @param float $all value to check percent
-     * @return integer|boolean return FALSE if $all was 0 value
+     * @return integer|boolean return false if $all was 0 value
      */
-    static function numberToPercent($part, $all)
+    public static function numberToPercent($part, $all)
     {
         if ($all === 0) {
-            return FALSE;
+            return false;
         }
 
         return ($part / $all) *100;
@@ -48,10 +50,10 @@ class Math
      * @param float $all value from calculate percent
      * @return integer
      */
-    static function percent($part, $all)
+    public static function percent($part, $all)
     {
         if ($all === 0) {
-            return FALSE;
+            return false;
         }
 
         return ($part / 100) *$all;
@@ -63,17 +65,18 @@ class Math
      * @param float $edition maximum number of value
      * @param float $used how many was used
      * @param integer $start start time in unix timestamp
+     * @param integer $timeNow current unix timestamp
      * @return integer estimated end time in unix timestamp
      */
-    static function end($edition, $used, $start){
+    public static function end($edition, $used, $start, $timeNow)
+    {
         if (!$used) {
             return 0;
         }
 
-        $timeNow = time();
-        $end     = $edition / ($used / ($timeNow - $start));
-
+        $end = $edition / ($used / ($timeNow - $start));
         $end += $timeNow;
+
         return $end;
     }
 }
