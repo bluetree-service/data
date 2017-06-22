@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+    <!ELEMENT root (child*)>
+    <!ELEMENT child (sub_child*, sub_child_text*)>
+    <!ELEMENT sub_child (sub*)>
+    <!ELEMENT sub_child_text (#PCDATA)>
+    <!ELEMENT sub (#PCDATA)>
+    <!ATTLIST child
+        id CDATA ""
+        name CDATA ""
+    >
+    <!ATTLIST sub_child id CDATA #IMPLIED>
+    <!ATTLIST sub_child_text options CDATA #IMPLIED>
+]>
+<root>
+    <child id="some_id" name="node name">
+        <sub_child id="sub_id">
+            <sub>lorem ipsum</sub>
+        </sub_child>
+        <sub_child_text>data 1</sub_child_text>
+        <sub_child_text options="1">data 2</sub_child_text>
+        <sub_child_text><![CDATA[data 3]]></sub_child_text>
+    </child>
+</root>
