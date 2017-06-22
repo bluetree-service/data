@@ -125,7 +125,7 @@ class Xml extends DOMDocument
         $this->formatOutput = true;
 
         if ($path) {
-            $bool = $this->save($path);
+            $bool = @$this->save($path);
             if (!$bool) {
                 $this->error = 'save_file_error';
                 return false;
@@ -135,28 +135,6 @@ class Xml extends DOMDocument
         }
 
         return $this->saveXML();
-    }
-
-    /**
-     * generate free numeric id
-     *
-     * @return integer|boolean return ID or null if there wasn't any node
-     */
-    public function getFreeId()
-    {
-        $root = $this->documentElement;
-
-        if ($root->hasChildNodes()) {
-            $tab = $this->searchByAttributeRecurrent($root->childNodes, 'id');
-            $tab[] = 'create_new_free_id';
-            $idList = array_keys($tab, 'create_new_free_id');
-
-            unset($tab);
-            $this->idList = $idList;
-            return reset($idList);
-        }
-
-        return null;
     }
 
     /**
