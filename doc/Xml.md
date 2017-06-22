@@ -54,7 +54,6 @@ Other methods
 --------------
 Some other usable methods:
 
-* **getFreeId** - generate free numeric id
 * **searchByAttribute** - search node for elements that contains element with give attribute
   * **DOMNodeList $node** - node to search in
   * **$value** - attribute value to search
