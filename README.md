@@ -5,8 +5,11 @@ Bluetree Service Data
 [![Latest Stable Version](https://poser.pugx.org/bluetree-service/data/v/stable.svg)](https://packagist.org/packages/bluetree-service/data)
 [![Total Downloads](https://poser.pugx.org/bluetree-service/data/downloads.svg)](https://packagist.org/packages/bluetree-service/data)
 [![License](https://poser.pugx.org/bluetree-service/data/license.svg)](https://packagist.org/packages/bluetree-service/data)
-[![Documentation Status](https://readthedocs.org/projects/class-kernel/badge/?version=latest)](https://readthedocs.org/projects/class-kernel/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/)](https://readthedocs.org/projects/)
 [![Coverage Status](https://coveralls.io/repos/bluetree-service/data/badge.svg)](https://coveralls.io/r/bluetree-service/data)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects//mini.png)](https://insight.sensiolabs.com/projects/)
+[![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data)
+
 
 Main files for all class libraries. Include classes to use BlueObject as trait and
 independent Object with xml data handling. Also allow to use Register to create
@@ -15,10 +18,14 @@ also can be used independent.
 
 ### Included libraries
 * **BlueData\Data\Xml** - extends DOMDocument to handle xml data
+* **BlueData\Calculation\Math** - 
+* **BlueData\Check\Validator** - 
 
 Documentation
 --------------
-* [BlueData\Data\Xml](https://github.com/bluetree-service/data/wiki/BlueData_Data_Xml "Xml")
+* [BlueData\Data\Xml](https://github.com/bluetree-service/data/blob/develop/doc/Xml.md "Xml")
+* [BlueData\Calculation\Math](https://github.com/bluetree-service/data/blob/develop/doc/Math.md "Math")
+* [BlueData\Check\Validator](https://github.com/bluetree-service/data/blob/develop/doc/Validator.md "Validator")
 
 Install via Composer
 --------------
@@ -45,13 +52,13 @@ Project description
 
 ### Requirements
 
-* PHP 5.4 or higher
+* PHP 5.5 or higher
 * DOM extension enabled
 
 Change log
 --------------
 All release version changes:  
-[Change log](https://github.com/bluetree-service/data/wiki/Change-log "Change log")
+[Change log](https://github.com/bluetree-service/data/blob/develop/doc/changelog.md "Change log")
 
 License
 --------------
