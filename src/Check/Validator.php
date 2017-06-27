@@ -46,7 +46,6 @@ class Validator
         'hex2' =>               '#^0x[\\da-f]+$#i',
         'octal' =>              '#^0[0-7]+$#',
         'binary' =>             '#^b[0-1]+$#i',
-        'week' =>               '#^[\\d]{4}-[\\d]{2}$#'
     ];
 
     /**
@@ -89,7 +88,6 @@ class Validator
      * 'hex2' =>               '#^0x[\\da-f]+$#i',
      * 'octal' =>              '#^0[0-7]+$#',
      * 'binary' =>             '#^b[0-1]+$#i',
-     * 'week' =>               '#^[\\d]{4}-[\\d]{2}$#'
      *
      * @param mixed $value value to check
      * @param string $type validation type
