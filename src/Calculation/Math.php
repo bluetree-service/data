@@ -79,4 +79,34 @@ class Math
 
         return $end;
     }
+
+    /**
+     * @param array $data
+     * @return float|int|null
+     */
+    public static function median(array $data)
+    {
+        $median = null;
+
+        sort($data);
+        $valuesCount = count($data);
+        $key = ($valuesCount -1 ) / 2;
+
+        if ($valuesCount % 2) {
+            $median = $data[$key];
+        } else {
+            $median = ($data[$key] + $data[$key +1]) / 2;
+        }
+
+        return $median;
+    }
+
+    /**
+     * @param array $data
+     * @return float|int
+     */
+    public static function average(array $data)
+    {
+        return array_sum($data) / count($data);
+    }
 }
