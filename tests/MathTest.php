@@ -43,4 +43,44 @@ class MathTest extends TestCase
         $this->assertEquals(1498136682, Math::end(1000, 100, $startTime, $currentTime));
         $this->assertEquals(0, Math::end(1000, 0, $startTime, $currentTime));
     }
+
+    /**
+     * @param array $data
+     * @param int|float $result
+     * @dataProvider data
+     */
+    public function testMedian(array $data, $result)
+    {
+        $this->assertEquals($result['median'], Math::median($data));
+    }
+
+    /**
+     * @param array $data
+     * @param int|float $result
+     * @dataProvider data
+     */
+    public function testAverage(array $data, $result)
+    {
+        $this->assertEquals($result['avg'], Math::average($data));
+    }
+
+    public function data()
+    {
+        return [
+            [
+                [1,1,1,1,2,2,3,1,100,5,3,7,2,3,62,8,9,45,3,2,45,6,7,8,99,6,64,3,2,22,1,1],
+                [
+                    'avg' => 16.40625,
+                    'median' => 3,
+                ]
+            ],
+            [
+                [1,2,2,3,1,100,5,3,7,2,3,62,8,9,45,3,2,45,6,7,8,99,6,64,3,2,22,1,1],
+                [
+                    'avg' => 18,
+                    'median' => 5,
+                ]
+            ]
+        ];
+    }
 }
