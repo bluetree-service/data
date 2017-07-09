@@ -49,13 +49,6 @@ class Validator
     ];
 
     /**
-     * contains information from PESEL validation, that user is male or female
-     * 0 -female, 1 -male
-     * @var int
-     */
-    public static $peselSex = null;
-
-    /**
      * standard validate method, use validation from $regularExpressions variable
      *
      * 'string' =>             '#^[\p{L} ]*$#u',
@@ -254,12 +247,6 @@ class Validator
         $value = preg_replace('#[\\s-]#', '', $value);
         if (!preg_match('#^[0-9]{11}$#', $value)) {
             return false;
-        }
-
-        if (($value[9] % 2) === 0) {
-            self::$peselSex = 0;
-        } else {
-            self::$peselSex = 1;
         }
 
         $arrSteps = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
