@@ -165,11 +165,11 @@ class Validator
             if (strlen($nip) === 10 && is_numeric($nip)) {
                 $sum = 0;
 
-                for ($i = 0; $i < 9; $i++) {
-                    $sum += $nip[$i] * $weights[$i];
+                foreach ($weights as $key => $val) {
+                    $sum += $nip[$key] * $val;
                 }
 
-                return ($sum % 11) === $nip[9];
+                return (string)($sum % 11) === $nip[9];
             }
         }
 
