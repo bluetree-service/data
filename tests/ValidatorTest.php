@@ -16,18 +16,104 @@ class ValidatorTest extends TestCase
 {
     public function testRegularExpressions()
     {
-        foreach ($this->regularExpressionsProvider() as $type => $data) {
+        $this->functionTest(
+            function ($expression, $type) {
+                return Validator::valid($expression, $type);
+            }
+        );
+    }
+
+    public function testMail()
+    {
+        $this->functionTest(
+            function ($expression) {
+                return Validator::mail($expression);
+            },
+            'mail'
+        );
+    }
+
+    public function testPrice()
+    {
+        $this->functionTest(
+            function ($expression) {
+                return Validator::price($expression);
+            },
+            'price'
+        );
+    }
+
+    public function testPostcode()
+    {
+        $this->functionTest(
+            function ($expression) {
+                return Validator::postcode($expression);
+            },
+            'postcode'
+        );
+    }
+
+    public function testNip()
+    {
+        $values = [[
+            'correct' => [
+                4878280798,
+                '998-993-11-84',
+                '998 741 29 94',
+            ],
+            'incorrect' => [
+                4874280798,
+                48782807981,
+                487828079,
+                '998-193-11-84',
+                '998/993/11/84',
+                '998 341 29 94',
+            ],
+        ]];
+
+        $this->check(
+            function ($expression) {
+                return Validator::nip($expression);
+            },
+            $values
+        );
+    }
+
+    /**
+     * @param \Closure $validFunction
+     * @param bool|string $type
+     */
+    protected function functionTest(\Closure $validFunction, $type = false)
+    {
+        $testData = [];
+
+        if ($type) {
+            $testData[$type] = $this->regularExpressionsProvider()[$type];
+        } else {
+            $testData = $this->regularExpressionsProvider();
+        }
+
+        $this->check($validFunction, $testData);
+    }
+
+    /**
+     * @param \Closure $validFunction
+     * @param array $testData
+     */
+    protected function check(\Closure $validFunction, array $testData)
+    {
+        foreach ($testData as $type => $data) {
             foreach ($data['correct'] as $correctExpression) {
-                $this->assertTrue(Validator::valid($correctExpression, $type), "$type: $correctExpression");
+                $this->assertTrue($validFunction($correctExpression, $type), "$type: $correctExpression");
             }
 
             foreach ($data['incorrect'] as $incorrectExpression) {
-                $this->assertFalse(Validator::valid($incorrectExpression, $type), "$type: $incorrectExpression");
+                $this->assertFalse($validFunction($incorrectExpression, $type), "$type: $incorrectExpression");
             }
         }
     }
 
-    public function regularExpressionsProvider()
+    protected function regularExpressionsProvider()
     {
         $testData = [
             [
