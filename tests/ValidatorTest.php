@@ -117,6 +117,88 @@ class ValidatorTest extends TestCase
         $this->assertFalse(Validator::pesel(93789452112));
     }
 
+    public function testRegon()
+    {
+        $this->assertTrue(Validator::regon(451239418));
+        $this->assertTrue(Validator::regon('451-239-418'));
+        $this->assertTrue(Validator::regon(81420296650613));
+
+        $this->assertFalse(Validator::regon(4512394181));
+        $this->assertFalse(Validator::regon(451239419));
+        $this->assertFalse(Validator::regon(45123941));
+        $this->assertFalse(Validator::regon(814202966506136));
+        $this->assertFalse(Validator::regon(8142029665061));
+    }
+
+    public function testNrb()
+    {
+        $this->assertTrue(Validator::nrb('42249000057255503346698354'));
+        $this->assertTrue(Validator::nrb('42 2490 0005 7255 5033 4669 8354'));
+        $this->assertTrue(Validator::nrb('42-2490-0005-7255-5033-4669-8354'));
+
+        $this->assertFalse(Validator::nrb(42249000057255503346698354));
+        $this->assertFalse(Validator::nrb(4224900005725550334669835));
+        $this->assertFalse(Validator::nrb(422490000572555033466983544));
+        $this->assertFalse(Validator::nrb(42549000057255503346693354));
+    }
+
+    public function testIban()
+    {
+        $this->assertTrue(Validator::iban('PL67249076002100555998070117'));
+        $this->assertTrue(Validator::iban('PL66249022982522'));
+        $this->assertTrue(Validator::iban('PL102490405804037964617707221535'));
+        $this->assertTrue(Validator::iban('102490405804037964617707221535'));
+        $this->assertTrue(Validator::iban('1024-9040-5804-0379-6461-7707-2215-35'));
+
+        $this->assertFalse(Validator::iban('PB67249076002100555998070117'));
+        $this->assertFalse(Validator::iban('PL66249022982527'));
+        $this->assertFalse(Validator::iban('102490405804037964617707221539'));
+    }
+
+    public function testUrl()
+    {
+        $urlExtended = $this->regularExpressionsProvider()['url_extend'];
+        $urlFull = $this->regularExpressionsProvider()['url_full'];
+        $url = $this->regularExpressionsProvider()['url'];
+
+        $this->check(
+            function ($expression) {
+                return Validator::url($expression, 1);
+            },
+            ['url_extend' => $urlExtended]
+        );
+
+        $this->check(
+            function ($expression) {
+                return Validator::url($expression, 2);
+            },
+            ['url_full' => $urlFull]
+        );
+
+        $this->check(
+            function ($expression) {
+                return Validator::url($expression);
+            },
+            ['url' => $url]
+        );
+    }
+
+    public function testPhine()
+    {
+        $this->functionTest(
+            function ($expression) {
+                return Validator::phone($expression);
+            },
+            'phone'
+        );
+    }
+
+    public function testStep()
+    {
+        $this->assertTrue(Validator::step(15, 5, 5));
+        $this->assertFalse(Validator::step(12, 5));
+    }
+
     /**
      * @param \Closure $validFunction
      * @param bool|string $type
@@ -338,6 +420,7 @@ class ValidatorTest extends TestCase
                     '+48 600 700 800',
                     '600-700-000',
                     '+48600700800',
+                    '+48 ( 052 ) 131 231-2312',
                 ],
                 'incorrect' => [
                     '34234234d',
