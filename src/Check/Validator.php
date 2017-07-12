@@ -183,9 +183,9 @@ class Validator
      * @param int $min minimal string length, if null don't check
      * @param int $max maximal string length, if null don't check
      * @return boolean
-     * @example stringLength('asdasdasd', $min = null, $max = 23)
-     * @example stringLength('asdasdasd', $min = 3, $max = 23)
-     * @example stringLength('asdasdasd', $min = 3)
+     * @example stringLength('asdasdasd', null, 23)
+     * @example stringLength('asdasdasd', 3, 23)
+     * @example stringLength('asdasdasd', 3)
      */
     public static function stringLength($value, $min = null, $max = null)
     {
@@ -201,11 +201,11 @@ class Validator
      * @param int $value
      * @param int $min minimal string length, if null don't check
      * @param int $max maximal string length, if null don't check
-     * @example range(23423, $min = null, $max = 23)
-     * @example range(23423, $min = 3, $max = 23)
-     * @example range(23423, $min = 3)
-     * @example range(0xd3a743f2ab, $min = 3)
-     * @example range('#aaffff', $min = 3)
+     * @example range(23423, null, 23)
+     * @example range(23423, 3, 23)
+     * @example range(23423, 3)
+     * @example range(0xd3a743f2ab, 3)
+     * @example range('#aaffff', 3)
      * @return boolean
      */
     public static function range($value, $min = null, $max = null)
@@ -252,14 +252,14 @@ class Validator
         $arrSteps = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
         $intSum = 0;
 
-        for ($i = 0; $i < 10; $i++) {
-            $intSum += $arrSteps[$i] * $value[$i];
+        foreach ($arrSteps as $key => $step) {
+            $intSum += $step * $value[$key];
         }
 
         $int = 10 - $intSum % 10;
         $intControlNr = ($int === 10) ? 0 : $int;
 
-        if ($intControlNr === $value[10]) {
+        if ((string)$intControlNr === $value[10]) {
             return true;
         }
 
@@ -276,21 +276,21 @@ class Validator
     {
         $value = preg_replace('#[\\s-]#', '', $value);
 
-        if (strlen($value) !== 9) {
+        if (!(strlen($value) === 9 || strlen($value) === 14)) {
             return false;
         }
 
         $arrSteps = [8, 9, 2, 3, 4, 5, 6, 7];
         $intSum = 0;
 
-        for ($i = 0; $i < 8; $i++) {
-            $intSum += $arrSteps[$i] * $value[$i];
+        foreach ($arrSteps as $key => $step) {
+            $intSum += $step * $value[$key];
         }
 
         $int = $intSum % 11;
         $intControlNr = ($int === 10) ? 0 : $int;
 
-        if ($intControlNr === $value[8]) {
+        if ((string)$intControlNr === $value[8]) {
             return true;
         }
 
@@ -305,22 +305,22 @@ class Validator
      */
     public static function nrb($value)
     {
-        $iNRB = preg_replace('#[\\s-]#', '', $value);
+        $iNRB = preg_replace('#[\\s- ]#', '', $value);
 
         if (strlen($iNRB) !== 26) {
             return false;
         }
 
-        $iNRB = $iNRB.'2521';
-        $iNRB = substr($iNRB, 2).substr($iNRB, 0, 2);
+        $iNRB = $iNRB . '2521';
+        $iNRB = substr($iNRB, 2) . substr($iNRB, 0, 2);
         $iNumSum = 0;
         $aNumWeight = [
             1, 10, 3, 30, 9, 90, 27, 76, 81, 34, 49, 5, 50, 15, 53,
             45, 62, 38, 89, 17, 73, 51, 25, 56, 75, 71, 31, 19, 93, 57
         ];
 
-        for ($i = 0; $i < 30; $i++) {
-            $iNumSum += $iNRB[29-$i] * $aNumWeight[$i];
+        foreach ($aNumWeight as $key => $num) {
+            $iNumSum += $num * $iNRB[29 -$key];
         }
 
         if ($iNumSum % 97 === 1) {
@@ -385,10 +385,10 @@ class Validator
      * check URL address
      *
      * @param string $url
-     * @param int $type if 1 check protocols also, if 2 check with GET parameters
+     * @param int|null $type if 1 check protocols also, if 2 check with GET parameters
      * @return boolean
      */
-    public static function url($url, $type)
+    public static function url($url, $type = null)
     {
         switch ($type) {
             case 1:
@@ -441,14 +441,14 @@ class Validator
      */
     public static function step($value, $step, $default = 0)
     {
-        if (!self::valid($step, 'float')
-            || !self::valid($default, 'float')
-            || !self::valid($value, 'float')
+        if (!self::valid($step, 'rational')
+            || !self::valid($default, 'rational')
+            || !self::valid($value, 'rational')
         ) {
             return false;
         }
 
-        $check = (abs($value)-abs($default))%$step;
+        $check = (abs($value) -abs($default)) % $step;
 
         if ($check) {
             return false;
@@ -467,13 +467,13 @@ class Validator
     {
         switch (true) {
             case self::validKey('hex', $min) || self::validKey('hex2', $min):
-                $value = hexdec($value);
-                $min = hexdec($min);
+                $value = hexdec(str_replace('#', '', $value));
+                $min = hexdec(str_replace('#', '', $min));
                 break;
 
             case self::validKey('hex', $max) || self::validKey('hex2', $max):
-                $value = hexdec($value);
-                $max = hexdec($max);
+                $value = hexdec(str_replace('#', '', $value));
+                $max = hexdec(str_replace('#', '', $max));
                 break;
 
             case self::validKey('octal', $min):
