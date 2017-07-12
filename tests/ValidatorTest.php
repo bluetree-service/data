@@ -79,6 +79,44 @@ class ValidatorTest extends TestCase
         );
     }
 
+    public function testRange()
+    {
+        $this->assertTrue(Validator::range(-1, null, 23));
+        $this->assertTrue(Validator::range(15, 3, 23));
+        $this->assertTrue(Validator::range(23423, 3));
+        $this->assertTrue(Validator::range(0xd3a743f2ab, 0xa0));
+        $this->assertTrue(Validator::range('#aaffff', '#00ffff'));
+
+        $this->assertFalse(Validator::range(23423, null, 23));
+        $this->assertFalse(Validator::range(2, 3, 23));
+        $this->assertFalse(Validator::range(2, 3));
+        $this->assertFalse(Validator::range(0xd3a743f2ab, 0xffffffffff));
+        $this->assertFalse(Validator::range('#aaffff', '#ffffff'));
+    }
+
+    public function testStringLength()
+    {
+        $this->assertTrue(Validator::stringLength('asdasdasdśżćł', null, 23));
+        $this->assertTrue(Validator::stringLength('asdasdasdśżćł', 3, 23));
+        $this->assertTrue(Validator::stringLength('asdasdasdśżćł', 3));
+
+        $this->assertFalse(Validator::stringLength('asdasdasdśżćł', null, 5));
+        $this->assertFalse(Validator::stringLength('ćł', 3, 23));
+        $this->assertFalse(Validator::stringLength('ćł', 3));
+    }
+
+    public function testUnderZero()
+    {
+        $this->assertTrue(Validator::underZero(-1));
+        $this->assertFalse(Validator::underZero(2));
+    }
+
+    public function testPesel()
+    {
+        $this->assertTrue(Validator::pesel(97082402112));
+        $this->assertFalse(Validator::pesel(93789452112));
+    }
+
     /**
      * @param \Closure $validFunction
      * @param bool|string $type
