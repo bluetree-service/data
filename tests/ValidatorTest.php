@@ -21,6 +21,8 @@ class ValidatorTest extends TestCase
                 return Validator::valid($expression, $type);
             }
         );
+
+        $this->assertNull(Validator::valid('some_expression', 'none_existing_type'));
     }
 
     public function testMail()
@@ -86,6 +88,7 @@ class ValidatorTest extends TestCase
         $this->assertTrue(Validator::range(23423, 3));
         $this->assertTrue(Validator::range(0xd3a743f2ab, 0xa0));
         $this->assertTrue(Validator::range('#aaffff', '#00ffff'));
+        $this->assertTrue(Validator::range('#aaffff', '#00ffff', '#bbffff'));
 
         $this->assertFalse(Validator::range(23423, null, 23));
         $this->assertFalse(Validator::range(2, 3, 23));
@@ -115,6 +118,7 @@ class ValidatorTest extends TestCase
     {
         $this->assertTrue(Validator::pesel(97082402112));
         $this->assertFalse(Validator::pesel(93789452112));
+        $this->assertFalse(Validator::pesel(9378945211278));
     }
 
     public function testRegon()
@@ -139,7 +143,7 @@ class ValidatorTest extends TestCase
         $this->assertFalse(Validator::nrb(42249000057255503346698354));
         $this->assertFalse(Validator::nrb(4224900005725550334669835));
         $this->assertFalse(Validator::nrb(422490000572555033466983544));
-        $this->assertFalse(Validator::nrb(42549000057255503346693354));
+        $this->assertFalse(Validator::nrb('42549000057255503346693354'));
     }
 
     public function testIban()
@@ -183,7 +187,7 @@ class ValidatorTest extends TestCase
         );
     }
 
-    public function testPhine()
+    public function testPhone()
     {
         $this->functionTest(
             function ($expression) {
@@ -197,6 +201,7 @@ class ValidatorTest extends TestCase
     {
         $this->assertTrue(Validator::step(15, 5, 5));
         $this->assertFalse(Validator::step(12, 5));
+        $this->assertFalse(Validator::step(12, 'a'));
     }
 
     /**
