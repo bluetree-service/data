@@ -469,32 +469,31 @@ class Validator
             case self::validKey('hex', $min) || self::validKey('hex2', $min):
                 $value = hexdec(str_replace('#', '', $value));
                 $min = hexdec(str_replace('#', '', $min));
-                break;
+                //must check all possibilities
 
             case self::validKey('hex', $max) || self::validKey('hex2', $max):
                 $value = hexdec(str_replace('#', '', $value));
                 $max = hexdec(str_replace('#', '', $max));
-                break;
+                //must check all possibilities
 
             case self::validKey('octal', $min):
                 $value = octdec($value);
                 $min = octdec($min);
-                break;
+                //must check all possibilities
 
             case self::validKey('octal', $max):
                 $value = octdec($value);
                 $max = octdec($max);
-                break;
+                //must check all possibilities
 
             case self::validKey('binary', $min):
                 $value = bindec($value);
                 $min = bindec($min);
-                break;
+                //must check all possibilities
 
             case self::validKey('binary', $max):
                 $value = bindec($value);
                 $max = bindec($max);
-                break;
         }
 
         return [$value, $min, $max];

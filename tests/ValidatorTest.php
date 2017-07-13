@@ -89,6 +89,8 @@ class ValidatorTest extends TestCase
         $this->assertTrue(Validator::range(0xd3a743f2ab, 0xa0));
         $this->assertTrue(Validator::range('#aaffff', '#00ffff'));
         $this->assertTrue(Validator::range('#aaffff', '#00ffff', '#bbffff'));
+        $this->assertTrue(Validator::range(0555, 0333, 0777));
+        $this->assertTrue(Validator::range(0b1110, 0b0000, 0b1111));
 
         $this->assertFalse(Validator::range(23423, null, 23));
         $this->assertFalse(Validator::range(2, 3, 23));
