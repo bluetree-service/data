@@ -5,9 +5,8 @@ Bluetree Service Data
 [![Latest Stable Version](https://poser.pugx.org/bluetree-service/data/v/stable.svg)](https://packagist.org/packages/bluetree-service/data)
 [![Total Downloads](https://poser.pugx.org/bluetree-service/data/downloads.svg)](https://packagist.org/packages/bluetree-service/data)
 [![License](https://poser.pugx.org/bluetree-service/data/license.svg)](https://packagist.org/packages/bluetree-service/data)
-[![Documentation Status](https://readthedocs.org/projects/)](https://readthedocs.org/projects/)
 [![Coverage Status](https://coveralls.io/repos/bluetree-service/data/badge.svg)](https://coveralls.io/r/bluetree-service/data)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects//mini.png)](https://insight.sensiolabs.com/projects/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a/mini.png)](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a)
 [![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data)
 
 
