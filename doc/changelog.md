@@ -1,17 +1,19 @@
 # Change Log
 
-## 0.2.0.0 - 2017-06-
+## 0.2.0.0 - 2017-07-16
 ### Added
 * composer.lock into repository
 * Code climate config file
+* Math and Validator classes
 
 ### Changed
 * Changelog moved into doc folder
-* Changed tests directory
+* Tests directory
 * Updated PHPUnit usage
+* Code convention
 
 ### Delete
-* removed support for PHP 5.4 from travis config
+* removed support for PHP 5.4 & 5.5 from travis config
 
 ## 0.1.0.0 - 2015-09-22
 ### Changed

@@ -28,7 +28,7 @@ class Math
     }
 
     /**
-     * calculate with percent is one number of other
+     * Calculate which percent is one number of other
      *
      * @param float $part value that is percent of other value
      * @param float $all value to check percent
@@ -44,7 +44,7 @@ class Math
     }
 
     /**
-     * calculate percent form value
+     * Calculate percent form value
      *
      * @param float $part value that will be percent of other value
      * @param float $all value from calculate percent
@@ -60,7 +60,7 @@ class Math
     }
 
     /**
-     * estimate time to end, by given current usage value and max value
+     * Estimate time to end, by given current usage value and max value
      *
      * @param float $edition maximum number of value
      * @param float $used how many was used
