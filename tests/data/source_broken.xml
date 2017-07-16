@@ -7,5 +7,3 @@
         <sub_child>data 1</sub_child>
         <sub_child options="1">data 2</sub_child>
         <sub_child><![CDATA[data 3]]></sub_child>
-    </child>
-</root>

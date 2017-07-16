@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+    <!ELEMENT root (child*)>
+    <!ELEMENT child (sub_child*)>
+    <!ELEMENT sub_child (#PCDATA)>
+    <!ATTLIST sub_child id ID #REQUIRED>
+    <!ATTLIST child id ID #REQUIRED>
+]>
+<root>
+    <child id="some_id">
+        <sub_child id="sub-id-1">lorem ipsum</sub_child>
+        <sub_child id="sub-id-2">data 1</sub_child>
+        <sub_child id="sub-id-3">data 2</sub_child>
+        <sub_child id="sub-id-4"><![CDATA[data 3]]></sub_child>
+    </child>
+</root>
