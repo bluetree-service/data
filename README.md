@@ -18,8 +18,8 @@ also can be used independent.
 
 ### Included libraries
 * **BlueData\Data\Xml** - extends DOMDocument to handle xml data
-* **BlueData\Calculation\Math** - 
-* **BlueData\Check\Validator** - 
+* **BlueData\Calculation\Math** - Store some mathematics calculations as static methods
+* **BlueData\Check\Validator** - Store some validations as static methods
 
 Documentation
 --------------
@@ -52,8 +52,9 @@ Project description
 
 ### Requirements
 
-* PHP 5.5 or higher
+* PHP 5.6 or higher
 * DOM extension enabled
+* Multibyte String extension enabled
 
 Change log
 --------------
