@@ -212,7 +212,7 @@ class Validator
     {
         list($value, $min, $max) = self::getProperValues($value, $min, $max);
 
-        if (($min != null && $min > $value) || ($max != null && $max < $value)) {
+        if (($min !== null && $min > $value) || ($max !== null && $max < $value)) {
             return false;
         }
 

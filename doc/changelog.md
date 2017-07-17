@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.1.0 - 2017-07-17
+### Changed
+* comparision to strict
+
 ## 0.2.0.0 - 2017-07-16
 ### Added
 * composer.lock into repository
