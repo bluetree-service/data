@@ -91,11 +91,10 @@ class Math
         sort($data);
         $valuesCount = count($data);
         $key = ($valuesCount -1 ) / 2;
+        $median = $data[$key];
 
-        if ($valuesCount % 2) {
-            $median = $data[$key];
-        } else {
-            $median = ($data[$key] + $data[$key +1]) / 2;
+        if (!($valuesCount % 2)) {
+            $median = ($median + $data[$key +1]) / 2;
         }
 
         return $median;

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.2.0 - 2017-07-18
+### Changed
+* Xml and Math, simplified some methods
+
 ## 0.2.1.0 - 2017-07-17
 ### Changed
 * comparision to strict

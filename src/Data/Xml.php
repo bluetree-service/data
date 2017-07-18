@@ -192,11 +192,7 @@ class Xml extends DOMDocument
      */
     public function checkId($elementId)
     {
-        if ($this->getElementById($elementId)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool)$this->getElementById($elementId);
     }
 
     /**
