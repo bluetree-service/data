@@ -245,7 +245,7 @@ class Validator
     public static function pesel($value)
     {
         $value = preg_replace('#[\\s-]#', '', $value);
-        if (!preg_match('#^[0-9]{11}$#', $value)) {
+        if (!preg_match('#^\d{11}$#', $value)) {
             return false;
         }
 
@@ -275,8 +275,9 @@ class Validator
     public static function regon($value)
     {
         $value = preg_replace('#[\\s-]#', '', $value);
+        $length = strlen($value);
 
-        if (!(strlen($value) === 9 || strlen($value) === 14)) {
+        if (!($length === 9 || $length === 14)) {
             return false;
         }
 
