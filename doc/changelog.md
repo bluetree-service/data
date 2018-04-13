@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.2.3.0 - 2018-04-13
+### Added
+* Scrutinizer support
+* New class for data formats
+### Changed
+* Travis will check build for PHP 7.1 and 7.2 also
+* Some code refactor
+
 ## 0.2.2.1 - 2017-07-18
 ### Changed
 * Code climate config update

@@ -16,12 +16,6 @@ use DomElement;
 class Xml extends DOMDocument
 {
     /**
-     * Root element
-     * @var DOMElement
-     */
-    public $documentElement;
-
-    /**
      * node type
      * ELEMENT_NODE                 (1) element
      * ATTRIBUTE_NODE               (2) attribute
@@ -37,16 +31,10 @@ class Xml extends DOMDocument
     public $nodeType;
 
     /**
-     * child nodes collection
-     * @var DOMNodeList
-     */
-    public $childNodes;
-
-    /**
      * error information
      * @var string
      */
-    public $error = null;
+    public $error;
 
     /**
      * last free id
@@ -248,6 +236,6 @@ class Xml extends DOMDocument
      */
     public function __toString()
     {
-        return $this->saveXmlFile();
+        return (string)$this->saveXmlFile();
     }
 }

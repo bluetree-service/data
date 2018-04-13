@@ -6,6 +6,7 @@
         </testsuite>
         <testsuite name="bluetree-data-math">
             <file>tests/MathTest.php</file>
+            <file>tests/FormatsTest.php</file>
         </testsuite>
         <testsuite name="bluetree-data-validator">
             <file>tests/ValidatorTest.php</file>

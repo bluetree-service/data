@@ -162,7 +162,7 @@ class Validator
             $weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
             $nip = preg_replace('#[\\s-]#', '', $value);
 
-            if (strlen($nip) === 10 && is_numeric($nip)) {
+            if (is_numeric($nip) && strlen($nip) === 10) {
                 $sum = 0;
 
                 foreach ($weights as $key => $val) {
@@ -212,11 +212,7 @@ class Validator
     {
         list($value, $min, $max) = self::getProperValues($value, $min, $max);
 
-        if (($min !== null && $min > $value) || ($max !== null && $max < $value)) {
-            return false;
-        }
-
-        return true;
+        return !(($min !== null && $min > $value) || ($max !== null && $max < $value));
     }
 
     /**
@@ -228,11 +224,7 @@ class Validator
      */
     public static function underZero($value)
     {
-        if ($value < 0) {
-            return true;
-        }
-
-        return false;
+        return $value < 0;
     }
 
     /**
@@ -259,11 +251,7 @@ class Validator
         $int = 10 - $intSum % 10;
         $intControlNr = ($int === 10) ? 0 : $int;
 
-        if ((string)$intControlNr === $value[10]) {
-            return true;
-        }
-
-        return false;
+        return (string)$intControlNr === $value[10];
     }
 
     /**
@@ -291,11 +279,7 @@ class Validator
         $int = $intSum % 11;
         $intControlNr = ($int === 10) ? 0 : $int;
 
-        if ((string)$intControlNr === $value[8]) {
-            return true;
-        }
-
-        return false;
+        return (string)$intControlNr === $value[8];
     }
 
     /**
@@ -312,7 +296,7 @@ class Validator
             return false;
         }
 
-        $iNRB = $iNRB . '2521';
+        $iNRB .= '2521';
         $iNRB = substr($iNRB, 2) . substr($iNRB, 0, 2);
         $iNumSum = 0;
         $aNumWeight = [
@@ -324,11 +308,7 @@ class Validator
             $iNumSum += $num * $iNRB[29 -$key];
         }
 
-        if ($iNumSum % 97 === 1) {
-            return true;
-        }
-
-        return false;
+        return $iNumSum % 97 === 1;
     }
 
     /**
@@ -363,23 +343,18 @@ class Validator
         }
 
         $temp = substr($temp, 4) . substr($temp, 0, 4);
-        $sum = strlen($temp);
 
-        for ($i = 0; $i < $sum; $i++) {
-            $values .= $chars[$temp{$i}];
+        foreach (str_split($temp) as $val) {
+            $values .= $chars[$val];
         }
 
         $sum = strlen($values);
-        for ($i = 0; $i < $sum; $i = $i +6) {
+        for ($i = 0; $i < $sum; $i += 6) {
             $separated = $mod . substr($values, $i, 6);
             $mod = (int)($separated) % 97;
         }
 
-        if ($mod === 1) {
-            return true;
-        }
-
-        return false;
+        return $mod === 1;
     }
 
     /**
@@ -459,42 +434,31 @@ class Validator
     }
 
     /**
-     * @param int $value
-     * @param int $min
-     * @param int $max
+     * @param mixed $value
+     * @param mixed $min
+     * @param mixed $max
      * @return array
      */
     protected static function getProperValues($value, $min, $max)
     {
-        switch (true) {
-            case self::validKey('hex', $min) || self::validKey('hex2', $min):
-                $value = hexdec(str_replace('#', '', $value));
-                $min = hexdec(str_replace('#', '', $min));
-                //must check all possibilities
+        if ((self::validKey('hex', $min) || self::validKey('hex2', $min))
+            && (self::validKey('hex', $max) || self::validKey('hex2', $max))
+        ) {
+            $value = hexdec(str_replace('#', '', $value));
+            $min = hexdec(str_replace('#', '', $min));
+            $max = hexdec(str_replace('#', '', $max));
+        }
 
-            case self::validKey('hex', $max) || self::validKey('hex2', $max):
-                $value = hexdec(str_replace('#', '', $value));
-                $max = hexdec(str_replace('#', '', $max));
-                //must check all possibilities
+        if (self::validKey('octal', $min) && self::validKey('octal', $max)) {
+            $value = octdec($value);
+            $min = octdec($min);
+            $max = octdec($max);
+        }
 
-            case self::validKey('octal', $min):
-                $value = octdec($value);
-                $min = octdec($min);
-                //must check all possibilities
-
-            case self::validKey('octal', $max):
-                $value = octdec($value);
-                $max = octdec($max);
-                //must check all possibilities
-
-            case self::validKey('binary', $min):
-                $value = bindec($value);
-                $min = bindec($min);
-                //must check all possibilities
-
-            case self::validKey('binary', $max):
-                $value = bindec($value);
-                $max = bindec($max);
+        if (self::validKey('binary', $min) && self::validKey('binary', $max)) {
+            $value = bindec($value);
+            $min = bindec($min);
+            $max = bindec($max);
         }
 
         return [$value, $min, $max];
