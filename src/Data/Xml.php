@@ -160,6 +160,22 @@ class Xml extends DOMDocument
         return $list;
     }
 
+    protected function processNode()
+    {
+        if ($child->hasChildNodes()) {
+            $list = $this->searchByAttributeRecurrent(
+                $child->childNodes,
+                $value,
+                $list
+            );
+        }
+
+        $attribute = $child->getAttribute($value);
+        if ($attribute) {
+            $list[$attribute] = $child;
+        }
+    }
+
     /**
      * search node for elements that contains element with give attribute
      *

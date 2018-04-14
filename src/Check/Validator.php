@@ -11,6 +11,17 @@ namespace BlueData\Check;
 
 class Validator
 {
+    const IBAN_CHARS = [
+        '0' => '0', '1' => '1', '2' => '2', '3' => '3', '4' => '4',
+        '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9',
+        'A' => '10', 'B' => '11', 'C' => '12', 'D' => '13', 'E' => '14',
+        'F' => '15', 'G' => '16', 'H' => '17', 'I' => '18', 'J' => '19',
+        'K' => '20', 'L' => '21', 'M' => '22', 'N' => '23', 'O' => '24',
+        'P' => '25', 'Q' => '26', 'R' => '27', 'S' => '28', 'T' => '29',
+        'U' => '30', 'V' => '31', 'W' => '32', 'X' => '33', 'Y' => '34',
+        'Z' => '35'
+    ];
+
     /**
      * array of regular expressions used to validate
      * @var array
@@ -176,6 +187,19 @@ class Validator
         return false;
     }
 
+    protected function processNip()
+    {
+        if (is_numeric($nip) && strlen($nip) === 10) {
+            $sum = 0;
+
+            foreach ($weights as $key => $val) {
+                $sum += $nip[$key] * $val;
+            }
+
+            return (string)($sum % 11) === $nip[9];
+        }
+    }
+
     /**
      * check string length, possibility to set range
      *
@@ -324,16 +348,6 @@ class Validator
         $remove = [' ', '-', '_', '.', ',','/', '|'];
         $cleared = str_replace($remove, '', $value);
         $temp = strtoupper($cleared);
-        $chars = [
-            '0' => '0', '1' => '1', '2' => '2', '3' => '3', '4' => '4',
-            '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9',
-            'A' => '10', 'B' => '11', 'C' => '12', 'D' => '13', 'E' => '14',
-            'F' => '15', 'G' => '16', 'H' => '17', 'I' => '18', 'J' => '19',
-            'K' => '20', 'L' => '21', 'M' => '22', 'N' => '23', 'O' => '24',
-            'P' => '25', 'Q' => '26', 'R' => '27', 'S' => '28', 'T' => '29',
-            'U' => '30', 'V' => '31', 'W' => '32', 'X' => '33', 'Y' => '34',
-            'Z' => '35'
-        ];
 
         $firstChar = $temp{0} <= '9';
         $secondChar = $temp{1} <= '9';
@@ -345,7 +359,7 @@ class Validator
         $temp = substr($temp, 4) . substr($temp, 0, 4);
 
         foreach (str_split($temp) as $val) {
-            $values .= $chars[$val];
+            $values .= self::IBAN_CHARS[$val];
         }
 
         $sum = strlen($values);
@@ -462,6 +476,35 @@ class Validator
         }
 
         return [$value, $min, $max];
+    }
+
+    protected function getHex()
+    {
+        if ((self::validKey('hex', $min) || self::validKey('hex2', $min))
+            && (self::validKey('hex', $max) || self::validKey('hex2', $max))
+        ) {
+            $value = hexdec(str_replace('#', '', $value));
+            $min = hexdec(str_replace('#', '', $min));
+            $max = hexdec(str_replace('#', '', $max));
+        }
+    }
+
+    protected function getOctal()
+    {
+        if (self::validKey('octal', $min) && self::validKey('octal', $max)) {
+            $value = octdec($value);
+            $min = octdec($min);
+            $max = octdec($max);
+        }
+    }
+
+    protected function getBinary()
+    {
+        if (self::validKey('binary', $min) && self::validKey('binary', $max)) {
+            $value = bindec($value);
+            $min = bindec($min);
+            $max = bindec($max);
+        }
     }
 
     /**
