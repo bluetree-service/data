@@ -173,21 +173,18 @@ class Validator
             $weights = [6, 5, 7, 2, 3, 4, 5, 6, 7];
             $nip = preg_replace('#[\\s-]#', '', $value);
 
-            if (is_numeric($nip) && strlen($nip) === 10) {
-                $sum = 0;
-
-                foreach ($weights as $key => $val) {
-                    $sum += $nip[$key] * $val;
-                }
-
-                return (string)($sum % 11) === $nip[9];
-            }
+            return self::processNip($nip, $weights);
         }
 
         return false;
     }
 
-    protected function processNip()
+    /**
+     * @param string $nip
+     * @param array $weights
+     * @return bool
+     */
+    protected static function processNip($nip, array $weights)
     {
         if (is_numeric($nip) && strlen($nip) === 10) {
             $sum = 0;
@@ -198,6 +195,8 @@ class Validator
 
             return (string)($sum % 11) === $nip[9];
         }
+
+        return false;
     }
 
     /**
@@ -455,21 +454,19 @@ class Validator
      */
     protected static function getProperValues($value, $min, $max)
     {
-        if ((self::validKey('hex', $min) || self::validKey('hex2', $min))
-            && (self::validKey('hex', $max) || self::validKey('hex2', $max))
-        ) {
+        if (self::isHex($min, $max)) {
             $value = hexdec(str_replace('#', '', $value));
             $min = hexdec(str_replace('#', '', $min));
             $max = hexdec(str_replace('#', '', $max));
         }
 
-        if (self::validKey('octal', $min) && self::validKey('octal', $max)) {
+        if (self::isOctal($min, $max)) {
             $value = octdec($value);
             $min = octdec($min);
             $max = octdec($max);
         }
 
-        if (self::validKey('binary', $min) && self::validKey('binary', $max)) {
+        if (self::isBin($min, $max)) {
             $value = bindec($value);
             $min = bindec($min);
             $max = bindec($max);
@@ -478,33 +475,35 @@ class Validator
         return [$value, $min, $max];
     }
 
-    protected function getHex()
+    /**
+     * @param mixed $min
+     * @param mixed $max
+     * @return bool
+     */
+    protected static function isHex($min, $max)
     {
-        if ((self::validKey('hex', $min) || self::validKey('hex2', $min))
-            && (self::validKey('hex', $max) || self::validKey('hex2', $max))
-        ) {
-            $value = hexdec(str_replace('#', '', $value));
-            $min = hexdec(str_replace('#', '', $min));
-            $max = hexdec(str_replace('#', '', $max));
-        }
+        return (self::validKey('hex', $min) || self::validKey('hex2', $min))
+            && (self::validKey('hex', $max) || self::validKey('hex2', $max));
     }
 
-    protected function getOctal()
+    /**
+     * @param mixed $min
+     * @param mixed $max
+     * @return bool
+     */
+    protected static function isOctal($min, $max)
     {
-        if (self::validKey('octal', $min) && self::validKey('octal', $max)) {
-            $value = octdec($value);
-            $min = octdec($min);
-            $max = octdec($max);
-        }
+        return self::validKey('octal', $min) && self::validKey('octal', $max);
     }
 
-    protected function getBinary()
+    /**
+     * @param mixed $min
+     * @param mixed $max
+     * @return bool
+     */
+    protected static function isBin($min, $max)
     {
-        if (self::validKey('binary', $min) && self::validKey('binary', $max)) {
-            $value = bindec($value);
-            $min = bindec($min);
-            $max = bindec($max);
-        }
+        return self::validKey('binary', $min) && self::validKey('binary', $max);
     }
 
     /**
