@@ -21,7 +21,7 @@ class Math
     public static function getPercentDifference($from, $into)
     {
         if ($into === 0) {
-            return false;
+            return 0;
         }
 
         return 100 - (($into / $from) *100);
@@ -32,12 +32,12 @@ class Math
      *
      * @param float $part value that is percent of other value
      * @param float $all value to check percent
-     * @return integer|boolean return false if $all was 0 value
+     * @return integer|float
      */
     public static function numberToPercent($part, $all)
     {
         if ($all === 0) {
-            return false;
+            return 0;
         }
 
         return ($part / $all) *100;
@@ -48,12 +48,12 @@ class Math
      *
      * @param float $part value that will be percent of other value
      * @param float $all value from calculate percent
-     * @return integer
+     * @return integer|float
      */
     public static function percent($part, $all)
     {
         if ($all === 0) {
-            return false;
+            return 0;
         }
 
         return ($part / 100) *$all;
@@ -82,12 +82,10 @@ class Math
 
     /**
      * @param array $data
-     * @return float|int|null
+     * @return float|int
      */
     public static function median(array $data)
     {
-        $median = null;
-
         sort($data);
         $valuesCount = count($data);
         $key = ($valuesCount -1 ) / 2;

@@ -18,21 +18,21 @@ class MathTest extends TestCase
     {
         $this->assertEquals(-200, Math::getPercentDifference(10, 30));
         $this->assertEquals(50, Math::getPercentDifference(20, 10));
-        $this->assertFalse(Math::getPercentDifference(10, 0));
+        $this->assertEquals(Math::getPercentDifference(10, 0), 0);
     }
 
     public function testNumberToPercent()
     {
         $this->assertEquals(50, Math::numberToPercent(10, 20));
         $this->assertEquals(200, Math::numberToPercent(20, 10));
-        $this->assertFalse(Math::numberToPercent(10, 0));
+        $this->assertEquals(Math::numberToPercent(10, 0), 0);
     }
 
     public function testPercent()
     {
         $this->assertEquals(10, Math::percent(10, 100));
         $this->assertEquals(10, Math::percent(100, 10));
-        $this->assertFalse(Math::percent(10, 0));
+        $this->assertEquals(Math::percent(10, 0), 0);
     }
 
     public function testEnd()

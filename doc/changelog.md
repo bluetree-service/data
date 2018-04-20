@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.2.4.0 - 2018-04-20
+### Added
+* Missing Formats doc
+### Changed
+* Some refactor stuff
+* Readme update
+* PHP version increased into min 5.6
+
 ## 0.2.3.0 - 2018-04-13
 ### Added
 * Scrutinizer support

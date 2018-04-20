@@ -1,15 +1,27 @@
 Bluetree Service Data
 ============
 
-[![Build Status](https://travis-ci.org/bluetree-service/data.svg)](https://travis-ci.org/bluetree-service/data)
 [![Latest Stable Version](https://poser.pugx.org/bluetree-service/data/v/stable.svg)](https://packagist.org/packages/bluetree-service/data)
 [![Total Downloads](https://poser.pugx.org/bluetree-service/data/downloads.svg)](https://packagist.org/packages/bluetree-service/data)
 [![License](https://poser.pugx.org/bluetree-service/data/license.svg)](https://packagist.org/packages/bluetree-service/data)
-[![Coverage Status](https://coveralls.io/repos/bluetree-service/data/badge.svg)](https://coveralls.io/r/bluetree-service/data)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a/mini.png)](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a)
-[![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data)
 
+##### Builds
+| Travis | Scrutinizer |
+|:---:|:---:|
+| [![Build Status](https://travis-ci.org/bluetree-service/data.svg)](https://travis-ci.org/bluetree-service/data) | [![Build Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/build-status/master) |
 
+##### Coverage
+| Coveralls | Scrutinizer |
+|:---:|:---:|
+| [![Coverage Status](https://coveralls.io/repos/bluetree-service/data/badge.svg)](https://coveralls.io/r/bluetree-service/data) | [![Code Coverage](https://scrutinizer-ci.com/g/bluetree-service/data/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) |
+
+##### Quality
+| Code Climate | Scrutinizer | Sensio Labs |
+|:---:|:---:|:---:|
+| [![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bluetree-service/data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) | [![SensioLabsInsight](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a/mini.png)](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a) |
+|  | [![Code Intelligence Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence) |  |
+
+var_dump
 Main files for all class libraries. Include classes to use BlueObject as trait and
 independent Object with xml data handling. Also allow to use Register to create
 objects and singletons. That package is base package for all Class libraries, but
@@ -23,6 +35,7 @@ also can be used independent.
 Documentation
 --------------
 * [BlueData\Data\Xml](https://github.com/bluetree-service/data/blob/develop/doc/Xml.md "Xml")
+* [BlueData\Data\Formats](https://github.com/bluetree-service/data/blob/develop/doc/Formats.md "Formats")
 * [BlueData\Calculation\Math](https://github.com/bluetree-service/data/blob/develop/doc/Math.md "Math")
 * [BlueData\Check\Validator](https://github.com/bluetree-service/data/blob/develop/doc/Validator.md "Validator")
 

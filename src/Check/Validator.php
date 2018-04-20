@@ -508,7 +508,7 @@ class Validator
 
     /**
      * @param string $key
-     * @param int $value
+     * @param int|float|double $value
      * @return int
      */
     protected static function validKey($key, $value)
