@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.4.1 - 2018-05-05
+### Added
+* Whitelist for phpunit
+
 ## 0.2.4.0 - 2018-04-20
 ### Added
 * Missing Formats doc
