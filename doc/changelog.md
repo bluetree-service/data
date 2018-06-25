@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.4.2 - 2018-06-25
+### Added
+* Test directory to scrutinizer exclude
+
 ## 0.2.4.1 - 2018-05-05
 ### Added
 * Whitelist for phpunit
