@@ -1,4 +1,5 @@
 <?php
+
 /**
  * extend DOMDocument to use framework xml configuration files
  *
@@ -7,6 +8,9 @@
  * @author      Michał Adamiak    <chajr@bluetree.pl>
  * @copyright   bluetree-service
  */
+
+declare(strict_types=1);
+
 namespace BlueData\Data;
 
 use DOMDocument;
@@ -34,7 +38,7 @@ class Xml extends DOMDocument
      * error information
      * @var string
      */
-    public $error;
+    public $error = '';
 
     /**
      * last free id
@@ -59,7 +63,7 @@ class Xml extends DOMDocument
      */
     public function __construct(array $options = [])
     {
-        $this->options = array_merge($this->options, $options);
+        $this->options = \array_merge($this->options, $options);
 
         parent::__construct(
             $this->options['version'],
@@ -71,14 +75,14 @@ class Xml extends DOMDocument
      * load xml file, optionally check file DTD
      *
      * @param string $path xml file path
-     * @param boolean $parse if true will check file DTD
-     * @return boolean
+     * @param bool $parse if true will check file DTD
+     * @return bool
      * @example loadXmlFile('cfg/config.xml', true)
      */
-    public function loadXmlFile($path, $parse = false)
+    public function loadXmlFile(string $path, bool $parse = false): bool
     {
         $this->preserveWhiteSpace = false;
-        $bool = file_exists($path);
+        $bool = \file_exists($path);
 
         if (!$bool) {
             $this->error = 'file_not_exists';
@@ -103,12 +107,12 @@ class Xml extends DOMDocument
      * save xml file, optionally will return as string
      *
      * @param string $path xml file path
-     * @return string|boolean
+     * @return string|bool
      *
      * @example saveXmlFile('path/filename.xml'); save to file
      * @example saveXmlFile() will return as simple text
      */
-    public function saveXmlFile($path = '')
+    public function saveXmlFile(string $path = '')
     {
         $this->formatOutput = true;
 
@@ -131,7 +135,7 @@ class Xml extends DOMDocument
      *
      * @param DOMNodeList $node
      * @param string $value attribute value to search
-     * @param array|boolean $list list of find nodes for recurrence
+     * @param array|bool $list list of find nodes for recurrence
      * @return array
      */
     protected function searchByAttributeRecurrent(
@@ -160,21 +164,21 @@ class Xml extends DOMDocument
         return $list;
     }
 
-    protected function processNode()
-    {
-        if ($child->hasChildNodes()) {
-            $list = $this->searchByAttributeRecurrent(
-                $child->childNodes,
-                $value,
-                $list
-            );
-        }
-
-        $attribute = $child->getAttribute($value);
-        if ($attribute) {
-            $list[$attribute] = $child;
-        }
-    }
+//    protected function processNode()
+//    {
+//        if ($child->hasChildNodes()) {
+//            $list = $this->searchByAttributeRecurrent(
+//                $child->childNodes,
+//                $value,
+//                $list
+//            );
+//        }
+//
+//        $attribute = $child->getAttribute($value);
+//        if ($attribute) {
+//            $list[$attribute] = $child;
+//        }
+//    }
 
     /**
      * search node for elements that contains element with give attribute
@@ -192,9 +196,9 @@ class Xml extends DOMDocument
      * check that element with given id exists
      *
      * @param string $elementId
-     * @return boolean return true if exists
+     * @return bool return true if exists
      */
-    public function checkId($elementId)
+    public function checkId(string $elementId): bool
     {
         return (bool)$this->getElementById($elementId);
     }
@@ -205,7 +209,7 @@ class Xml extends DOMDocument
      * @param string $elementId
      * @return DOMElement
      */
-    public function getId($elementId)
+    public function getId(string $elementId): DOMElement
     {
         return $this->getElementById($elementId);
     }
@@ -215,7 +219,7 @@ class Xml extends DOMDocument
      *
      * @return bool
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         if ($this->error) {
             return true;
@@ -229,7 +233,7 @@ class Xml extends DOMDocument
      *
      * @return Xml
      */
-    public function clearErrors()
+    public function clearErrors(): self
     {
         $this->error = null;
         return $this;
@@ -240,7 +244,7 @@ class Xml extends DOMDocument
      *
      * @return string
      */
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
     }
@@ -248,9 +252,9 @@ class Xml extends DOMDocument
     /**
      * return xml string
      *
-     * @return bool|string
+     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->saveXmlFile();
     }

@@ -8,17 +8,17 @@ Bluetree Service Data
 ##### Builds
 | Travis | Scrutinizer |
 |:---:|:---:|
-| [![Build Status](https://travis-ci.org/bluetree-service/data.svg)](https://travis-ci.org/bluetree-service/data) | [![Build Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/build-status/master) |
+| [![Build Status](https://app.travis-ci.com/bluetree-service/data.svg?branch=master)](https://app.travis-ci.com/github/bluetree-service/data) | [![Build Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/build-status/master) |
 
 ##### Coverage
 | Coveralls | Scrutinizer |
 |:---:|:---:|
-| [![Coverage Status](https://coveralls.io/repos/bluetree-service/data/badge.svg)](https://coveralls.io/r/bluetree-service/data) | [![Code Coverage](https://scrutinizer-ci.com/g/bluetree-service/data/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) |
+| [![Coverage Status](https://coveralls.io/repos/github/bluetree-service/data/badge.svg?branch=master)](https://coveralls.io/github/bluetree-service/data?branch=master) | [![Code Coverage](https://scrutinizer-ci.com/g/bluetree-service/data/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) |
 
 ##### Quality
 | Code Climate | Scrutinizer | Sensio Labs |
 |:---:|:---:|:---:|
-| [![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bluetree-service/data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) | [![SensioLabsInsight](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a/mini.png)](https://insight.sensiolabs.com/projects/907839d1-2836-4a0d-a205-8c953e79268a) |
+| [![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bluetree-service/data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) | [![SymfonyInsight](https://insight.symfony.com/projects/20bfbb43-bdb7-4b06-98ed-abc693dc2e48/mini.svg)](https://insight.symfony.com/projects/20bfbb43-bdb7-4b06-98ed-abc693dc2e48) |
 |  | [![Code Intelligence Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence) |  |
 
 var_dump
@@ -64,7 +64,7 @@ Project description
 
 ### Requirements
 
-* PHP 5.6 or higher
+* PHP 7.3 or higher
 * DOM extension enabled
 * Multibyte String extension enabled
 

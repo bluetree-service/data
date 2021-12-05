@@ -1,4 +1,5 @@
 <?php
+
 /**
  * contains some helpful mathematics models
  *
@@ -7,6 +8,9 @@
  * @author      Michał Adamiak    <chajr@bluetree.pl>
  * @copyright   bluetree-service
  */
+
+declare(strict_types=1);
+
 namespace BlueData\Calculation;
 
 class Math
@@ -24,15 +28,15 @@ class Math
             return 0;
         }
 
-        return 100 - (($into / $from) *100);
+        return 100 - (($into / $from) * 100);
     }
 
     /**
      * Calculate which percent is one number of other
      *
-     * @param float $part value that is percent of other value
-     * @param float $all value to check percent
-     * @return integer|float
+     * @param int|float $part value that is percent of other value
+     * @param int|float $all value to check percent
+     * @return int|float
      */
     public static function numberToPercent($part, $all)
     {
@@ -40,15 +44,15 @@ class Math
             return 0;
         }
 
-        return ($part / $all) *100;
+        return ($part / $all) * 100;
     }
 
     /**
      * Calculate percent form value
      *
-     * @param float $part value that will be percent of other value
-     * @param float $all value from calculate percent
-     * @return integer|float
+     * @param int|float $part value that will be percent of other value
+     * @param int|float $all value from calculate percent
+     * @return int|float
      */
     public static function percent($part, $all)
     {
@@ -56,19 +60,19 @@ class Math
             return 0;
         }
 
-        return ($part / 100) *$all;
+        return ($part / 100) * $all;
     }
 
     /**
      * Estimate time to end, by given current usage value and max value
      *
-     * @param float $edition maximum number of value
-     * @param float $used how many was used
-     * @param integer $start start time in unix timestamp
-     * @param integer $timeNow current unix timestamp
-     * @return integer estimated end time in unix timestamp
+     * @param int|float $edition maximum number of value
+     * @param int|float $used how many was used
+     * @param int $start start time in unix timestamp
+     * @param int $timeNow current unix timestamp
+     * @return int estimated end time in unix timestamp
      */
-    public static function end($edition, $used, $start, $timeNow)
+    public static function end($edition, $used, int $start, int $timeNow)
     {
         if (!$used) {
             return 0;
@@ -86,13 +90,13 @@ class Math
      */
     public static function median(array $data)
     {
-        sort($data);
-        $valuesCount = count($data);
-        $key = ($valuesCount -1 ) / 2;
+        \sort($data);
+        $valuesCount = \count($data);
+        $key = ($valuesCount - 1 ) / 2;
         $median = $data[$key];
 
         if (!($valuesCount % 2)) {
-            $median = ($median + $data[$key +1]) / 2;
+            $median = ($median + $data[$key + 1]) / 2;
         }
 
         return $median;
@@ -104,6 +108,6 @@ class Math
      */
     public static function average(array $data)
     {
-        return array_sum($data) / count($data);
+        return \array_sum($data) / \count($data);
     }
 }

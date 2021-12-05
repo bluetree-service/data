@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.3.0.0 - 2021-12-05
+### Added
+* PHP 7.3, 7.4, 8.0 support
+* Type declarations
+### Removed
+* PHP 5.6 & 7.0, 7.1 support
+* composer.lock from repository
+### Changed
+* Some required libraries version
+* Some minor changes in code style
+
 ## 0.2.4.2 - 2018-06-25
 ### Added
 * Test directory to scrutinizer exclude
