@@ -113,7 +113,10 @@ class XmlTest extends TestCase
 
         $this->assertFalse($loaded);
         $this->assertTrue($xml->hasErrors());
-        $this->assertEquals('loading_file_error', $xml->getError());
+        $this->assertMatchesRegularExpression(
+            '/^loading_file_error: DOMDocument::load\(\): Premature end of data in tag child line .*/',
+            $xml->getError()
+        );
     }
 
     public function testLoadingNoneValidXml(): void
@@ -123,7 +126,7 @@ class XmlTest extends TestCase
 
         $this->assertFalse($loaded);
         $this->assertTrue($xml->hasErrors());
-        $this->assertEquals('parse_file_error', $xml->getError());
+        $this->assertEquals('parse_file_error: DOMDocument::validate(): no DTD found!', $xml->getError());
 
         $this->assertFalse($xml->clearErrors()->hasErrors());
     }
@@ -157,7 +160,10 @@ class XmlTest extends TestCase
         $val = $xml->saveXmlFile(self::XML_NO_EXISTS . '/\\');
 
         $this->assertFalse($val);
-        $this->assertEquals('save_file_error', $xml->getError());
+        $this->assertEquals(
+            'save_file_error: DOMDocument::save(none_exists.xml/\): Failed to open stream: No such file or directory',
+            $xml->getError()
+        );
         $this->assertTrue($xml->hasErrors());
         $this->assertFileDoesNotExist(self::XML_NO_EXISTS . '/\\');
     }

@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.4.0.0 - 2021-12-06
+### Changed
+* Improved error handling for Xml
+* Improved code readability
+
 ## 0.3.0.0 - 2021-12-05
 ### Added
 * PHP 7.3, 7.4, 8.0 support

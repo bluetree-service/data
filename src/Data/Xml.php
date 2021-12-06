@@ -89,15 +89,44 @@ class Xml extends DOMDocument
             return false;
         }
 
-        $bool = @$this->load($path);
+        return $this->loadAndValid($path, $parse);
+    }
+
+    /**
+     * @param string $path
+     * @param bool $parse
+     * @return bool
+     */
+    protected function loadAndValid(string $path, bool $parse): bool
+    {
+        $bool = false;
+        $additional = '';
+
+        try {
+            $bool = $this->load($path);
+        } catch (\Throwable $exception) {
+            $additional = ': ' . $exception->getMessage();
+        }
+
         if (!$bool) {
-            $this->error = 'loading_file_error';
+            $this->error = 'loading_file_error' . $additional;
             return false;
         }
 
-        if ($parse && !@$this->validate()) {
-            $this->error = 'parse_file_error';
-            return false;
+        if ($parse) {
+            $validate = false;
+            $additional = '';
+
+            try {
+                $validate = $this->validate();
+            } catch (\Throwable $exception) {
+                $additional = ': ' . $exception->getMessage();
+            }
+
+            if (!$validate) {
+                $this->error = 'parse_file_error' . $additional;
+                return false;
+            }
         }
 
         return true;
@@ -117,9 +146,17 @@ class Xml extends DOMDocument
         $this->formatOutput = true;
 
         if ($path) {
-            $bool = @$this->save($path);
+            $bool = false;
+            $additional = '';
+
+            try {
+                $bool = $this->save($path);
+            } catch (\Throwable $exception) {
+                $additional = ': ' . $exception->getMessage();
+            }
+
             if (!$bool) {
-                $this->error = 'save_file_error';
+                $this->error = 'save_file_error' . $additional;
                 return false;
             }
 
@@ -135,50 +172,47 @@ class Xml extends DOMDocument
      *
      * @param DOMNodeList $node
      * @param string $value attribute value to search
-     * @param array|bool $list list of find nodes for recurrence
+     * @param array $list list of find nodes for recurrence
      * @return array
      */
     protected function searchByAttributeRecurrent(
         DOMNodeList $node,
-        $value,
+        string $value,
         array $list = []
-    ) {
+    ): array {
         /** @var DomElement $child */
         foreach ($node as $child) {
             if ($child->nodeType === 1) {
-                if ($child->hasChildNodes()) {
-                    $list = $this->searchByAttributeRecurrent(
-                        $child->childNodes,
-                        $value,
-                        $list
-                    );
-                }
-
-                $attribute = $child->getAttribute($value);
-                if ($attribute) {
-                    $list[$attribute] = $child;
-                }
+                $list = $this->processNode($child, $list, $value);
             }
         }
 
         return $list;
     }
 
-//    protected function processNode()
-//    {
-//        if ($child->hasChildNodes()) {
-//            $list = $this->searchByAttributeRecurrent(
-//                $child->childNodes,
-//                $value,
-//                $list
-//            );
-//        }
-//
-//        $attribute = $child->getAttribute($value);
-//        if ($attribute) {
-//            $list[$attribute] = $child;
-//        }
-//    }
+    /**
+     * @param DomElement $child
+     * @param array $list
+     * @param string $value
+     * @return array
+     */
+    protected function processNode(DomElement $child, array $list, string $value): array
+    {
+        if ($child->hasChildNodes()) {
+            $list = $this->searchByAttributeRecurrent(
+                $child->childNodes,
+                $value,
+                $list
+            );
+        }
+
+        $attribute = $child->getAttribute($value);
+        if ($attribute) {
+            $list[$attribute] = $child;
+        }
+
+        return $list;
+    }
 
     /**
      * search node for elements that contains element with give attribute
