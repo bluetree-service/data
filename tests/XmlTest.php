@@ -158,10 +158,17 @@ class XmlTest extends TestCase
     {
         $xml = $this->createSimpleXml();
         $val = $xml->saveXmlFile(self::XML_NO_EXISTS . '/\\');
+        $char = 'F';
+
+        if (\PHP_VERSION_ID < 80000) {
+            $char = 'f';
+        }
 
         $this->assertFalse($val);
         $this->assertEquals(
-            'save_file_error: DOMDocument::save(none_exists.xml/\): Failed to open stream: No such file or directory',
+            'save_file_error: DOMDocument::save(none_exists.xml/\): '
+            . $char
+            . 'ailed to open stream: No such file or directory',
             $xml->getError()
         );
         $this->assertTrue($xml->hasErrors());
