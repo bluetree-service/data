@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1.0 - 2022-03-20
+### Fixed
+* Xml properties type
+
 ## 0.4.0.1 - 2021-12-09
 ### Fixed
 * Tests for php 7.3 & 7.4

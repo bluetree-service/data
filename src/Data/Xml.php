@@ -30,28 +30,28 @@ class Xml extends DOMDocument
      * PROCESSING_INSTRUCTION_NODE  (7) process instruction
      * COMMENT_NODE                 (8) comment
      * DOCUMENT_NODE                (9) main document element
-     * @var integer
+     * @var int
      */
-    public $nodeType;
+    public int $nodeType;
 
     /**
      * error information
-     * @var string
+     * @var string|null
      */
-    public $error = '';
+    public ?string $error = '';
 
     /**
      * last free id
      * @var string
      */
-    protected $idList;
+    protected string $idList;
 
     /**
      * default constructor options
      *
      * @var array
      */
-    protected $options = [
+    protected array $options = [
         'version' => '1.0',
         'encoding' => 'UTF-8'
     ];
