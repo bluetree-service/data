@@ -18,21 +18,21 @@ class MathTest extends TestCase
     {
         $this->assertEquals(-200, Math::getPercentDifference(10, 30));
         $this->assertEquals(50, Math::getPercentDifference(20, 10));
-        $this->assertEquals(Math::getPercentDifference(10, 0), 0);
+        $this->assertEquals(0, Math::getPercentDifference(10, 0));
     }
 
     public function testNumberToPercent()
     {
         $this->assertEquals(50, Math::numberToPercent(10, 20));
         $this->assertEquals(200, Math::numberToPercent(20, 10));
-        $this->assertEquals(Math::numberToPercent(10, 0), 0);
+        $this->assertEquals(0, Math::numberToPercent(10, 0));
     }
 
     public function testPercent()
     {
         $this->assertEquals(10, Math::percent(10, 100));
         $this->assertEquals(10, Math::percent(100, 10));
-        $this->assertEquals(Math::percent(10, 0), 0);
+        $this->assertEquals(0, Math::percent(10, 0));
     }
 
     public function testEnd()
@@ -46,25 +46,25 @@ class MathTest extends TestCase
 
     /**
      * @param array $data
-     * @param int|float $result
+     * @param array $result
      * @dataProvider data
      */
-    public function testMedian(array $data, $result)
+    public function testMedian(array $data, array $result)
     {
         $this->assertEquals($result['median'], Math::median($data));
     }
 
     /**
      * @param array $data
-     * @param int|float $result
+     * @param array $result
      * @dataProvider data
      */
-    public function testAverage(array $data, $result)
+    public function testAverage(array $data, array $result)
     {
         $this->assertEquals($result['avg'], Math::average($data));
     }
 
-    public function data()
+    public static function data(): array
     {
         return [
             [

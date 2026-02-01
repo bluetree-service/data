@@ -36,7 +36,7 @@ class Validator
      * array of regular expressions used to validate
      * @var array
      */
-    public static $regularExpressions = [
+    public static array $regularExpressions = [
         'string' =>             '#^[\p{L} ]*$#u',
         'letters' =>            '#^[\p{L} _ ,.-]*$#u',
         'letters_extend' =>     '#^[\p{L}_ ,\\.;:-]*$#u',
@@ -130,10 +130,10 @@ class Validator
     /**
      * check price format
      *
-     * @param int|string $value
+     * @param int|float|string $value
      * @return bool
      */
-    public static function price($value): bool
+    public static function price(int|float|string $value): bool
     {
         return (bool)preg_match((string)self::$regularExpressions['price'], (string)$value);
     }
@@ -219,7 +219,7 @@ class Validator
      * @example range('#aaffff', 3)
      * @return bool
      */
-    public static function range($value, $min = null, $max = null): bool
+    public static function range(int|string|float $value, $min = null, $max = null): bool
     {
         [$value, $min, $max] = self::getProperValues($value, $min, $max);
 

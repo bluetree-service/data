@@ -108,27 +108,57 @@ class XmlTest extends TestCase
 
     public function testLoadingBrokenXml(): void
     {
-        $xml = new Xml();
-        $loaded = $xml->loadXmlFile(self::XML_BROKEN);
+        $warning = null;
+        set_error_handler(function($errno, $errstr) use (&$warning) {
+            $warning = $errstr;
+            return true;
+        });
 
-        $this->assertFalse($loaded);
-        $this->assertTrue($xml->hasErrors());
-        $this->assertMatchesRegularExpression(
-            '/^loading_file_error: DOMDocument::load\(\): Premature end of data in tag child line .*/',
-            $xml->getError()
+        try {
+            $xml = new Xml();
+            $loaded = $xml->loadXmlFile(self::XML_BROKEN);
+    
+            $this->assertFalse($loaded);
+            $this->assertTrue($xml->hasErrors());
+            $this->assertEquals(
+                'loading_file_error',
+                $xml->getError()
+            );
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertStringContainsString(
+            "DOMDocument::load(): Premature end of data in tag child line 3 in /var/www/html/tests/data/source_broken.xml",
+            $warning
         );
     }
 
     public function testLoadingNoneValidXml(): void
     {
-        $xml = new Xml();
-        $loaded = $xml->loadXmlFile(self::XML_SOURCE, true);
+        $warning = null;
+        set_error_handler(function($errno, $errstr) use (&$warning) {
+            $warning = $errstr;
+            return true;
+        });
 
-        $this->assertFalse($loaded);
-        $this->assertTrue($xml->hasErrors());
-        $this->assertEquals('parse_file_error: DOMDocument::validate(): no DTD found!', $xml->getError());
+        try {
+            $xml = new Xml();
+            $loaded = $xml->loadXmlFile(self::XML_SOURCE, true);
+    
+            $this->assertFalse($loaded);
+            $this->assertTrue($xml->hasErrors());
+            $this->assertEquals('parse_file_error', $xml->getError());
+    
+            $this->assertFalse($xml->clearErrors()->hasErrors());
+        } finally {
+            restore_error_handler();
+        }
 
-        $this->assertFalse($xml->clearErrors()->hasErrors());
+        $this->assertStringContainsString(
+            "DOMDocument::validate(): no DTD found!",
+            $warning
+        );
     }
 
     public function testSaveXmlAsString(): void
@@ -156,23 +186,33 @@ class XmlTest extends TestCase
 
     public function testSaveXmlWithError(): void
     {
-        $xml = $this->createSimpleXml();
-        $val = $xml->saveXmlFile(self::XML_NO_EXISTS . '/\\');
-        $char = 'F';
+        $warning = null;
+        set_error_handler(function($errno, $errstr) use (&$warning) {
+            $warning = $errstr;
+            return true;
+        });
 
-        if (\PHP_VERSION_ID < 80000) {
-            $char = 'f';
+        try {
+            $xml = $this->createSimpleXml();
+            $val = $xml->saveXmlFile(self::XML_NO_EXISTS . '/\\');
+            $char = 'F';
+    
+            if (\PHP_VERSION_ID < 80000) {
+                $char = 'f';
+            }
+    
+            $this->assertFalse($val);
+            $this->assertEquals('save_file_error', $xml->getError());
+            $this->assertTrue($xml->hasErrors());
+            $this->assertFileDoesNotExist(self::XML_NO_EXISTS . '/\\');
+        } finally {
+            restore_error_handler();
         }
 
-        $this->assertFalse($val);
-        $this->assertEquals(
-            'save_file_error: DOMDocument::save(none_exists.xml/\): '
-            . $char
-            . 'ailed to open stream: No such file or directory',
-            $xml->getError()
+        $this->assertStringContainsString(
+            "DOMDocument::save(none_exists.xml/\): Failed to open stream: No such file or directory",
+            $warning
         );
-        $this->assertTrue($xml->hasErrors());
-        $this->assertFileDoesNotExist(self::XML_NO_EXISTS . '/\\');
     }
 
     public function testThatIdExists(): void
