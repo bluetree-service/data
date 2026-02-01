@@ -14,12 +14,13 @@
         }
     ],
     "require": {
-        "php": ">= 7.3",
+        "php": "^8.2",
         "ext-dom": "*"
     },
     "require-dev": {
-        "php-coveralls/php-coveralls": "^2.5",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^11.5",
+        "phpdocumentor/reflection-docblock": "^6.0",
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
@@ -30,5 +31,14 @@
         "psr-4": {
             "Test\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit --display-warnings",
+        "coverage": "./vendor/bin/phpunit --display-warnings --coverage-clover build/logs/clover.xml",
+        "clover-report": "./vendor/bin/clover_reporter -c build/logs/clover.xml",
+        "clover-report-full": "./vendor/bin/clover_reporter -f build/logs/clover.xml",
+        "test-complete": [
+            "@coverage"
+        ]
     }
 }

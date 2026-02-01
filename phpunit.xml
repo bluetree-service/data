@@ -2,7 +2,7 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="bluetree-data-xml">
-            <directory>tests/XmlTest.php</directory>
+            <file>tests/XmlTest.php</file>
         </testsuite>
         <testsuite name="bluetree-data-math">
             <file>tests/MathTest.php</file>
@@ -12,9 +12,9 @@
             <file>tests/ValidatorTest.php</file>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <source>
+        <include>
             <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </source>
 </phpunit>

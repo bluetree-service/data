@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.5.0.0 - 2026-02-01
+### Added
+* Composer scripts for testing
+* Types for parameters and for return
+* Makefile for easier development
+* Testing on multiple PHP versions
+### Changed
+* Minimal PHP version set to 8.2
+* Updated required libraries
+* Improved tests
+* Improved Math:median method
+
 ## 0.4.1.0 - 2022-03-20
 ### Fixed
 * Xml properties type
