@@ -17,9 +17,6 @@
 * Updated required libraries
 * Improved tests
 * Improved Math:median method
-* Improved and fixed Validator:range method
-* Coverage improvements
-* Test improvements
 
 ## 0.4.1.0 - 2022-03-20
 ### Fixed
