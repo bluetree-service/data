@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.1.0 - 2026-02-03
+### Changed
+* Improved and fixed Validator:range method
+* Coverage improvements
+* Test improvements
+
 ## 0.5.0.0 - 2026-02-01
 ### Added
 * Composer scripts for testing
