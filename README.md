@@ -1,25 +1,24 @@
 Bluetree Service Data
 ============
 
-[![Latest Stable Version](https://poser.pugx.org/bluetree-service/data/v/stable.svg)](https://packagist.org/packages/bluetree-service/data)
-[![Total Downloads](https://poser.pugx.org/bluetree-service/data/downloads.svg)](https://packagist.org/packages/bluetree-service/data)
-[![License](https://poser.pugx.org/bluetree-service/data/license.svg)](https://packagist.org/packages/bluetree-service/data)
+[![Latest Stable Version](https://poser.pugx.org/bluetree-service/data/v/stable.svg?style=flat-square)](https://packagist.org/packages/bluetree-service/data)
+[![Total Downloads](https://poser.pugx.org/bluetree-service/data/downloads.svg?style=flat-square)](https://packagist.org/packages/bluetree-service/data)
+[![License](https://poser.pugx.org/bluetree-service/data/license.svg?style=flat-square)](https://packagist.org/packages/bluetree-service/data)
 
-##### Builds
-| Travis | Scrutinizer |
-|:---:|:---:|
-| [![Build Status](https://app.travis-ci.com/bluetree-service/data.svg?branch=master)](https://app.travis-ci.com/github/bluetree-service/data) | [![Build Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/build-status/master) |
+[![Build Status](https://travis-ci.org/bluetree-service/data.svg?style=flat-square)](https://travis-ci.org/bluetree-service/data)
+[![Coverage Status](https://coveralls.io/repos/github/bluetree-service/data/badge.svg?style=flat-square&branch=master)](https://coveralls.io/github/bluetree-service/data?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/build.png?style=flat-square&b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/bluetree-service/data/badges/coverage.png?style=flat-square&b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master)
 
-##### Coverage
-| Coveralls | Scrutinizer |
-|:---:|:---:|
-| [![Coverage Status](https://coveralls.io/repos/github/bluetree-service/data/badge.svg?branch=master)](https://coveralls.io/github/bluetree-service/data?branch=master) | [![Code Coverage](https://scrutinizer-ci.com/g/bluetree-service/data/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) |
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=bluetree-service_data&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
 
-##### Quality
-| Code Climate | Scrutinizer | Sensio Labs |
-|:---:|:---:|:---:|
-| [![Code Climate](https://codeclimate.com/github/bluetree-service/data/badges/gpa.svg)](https://codeclimate.com/github/bluetree-service/data) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bluetree-service/data/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bluetree-service/data/?branch=master) | [![SymfonyInsight](https://insight.symfony.com/projects/20bfbb43-bdb7-4b06-98ed-abc693dc2e48/mini.svg)](https://insight.symfony.com/projects/20bfbb43-bdb7-4b06-98ed-abc693dc2e48) |
-|  | [![Code Intelligence Status](https://scrutinizer-ci.com/g/bluetree-service/data/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence) |  |
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=bluetree-service_data)
 
 var_dump
 Main files for all class libraries. Include classes to use BlueObject as trait and
@@ -64,7 +63,7 @@ Project description
 
 ### Requirements
 
-* PHP 7.3 or higher
+* PHP 8.2 or higher
 * DOM extension enabled
 * Multibyte String extension enabled
 
