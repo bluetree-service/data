@@ -81,22 +81,58 @@ class ValidatorTest extends TestCase
         );
     }
 
+    public function testNipInvalid()
+    {
+        $this->assertFalse(Validator::nip(''));
+    }
+
     public function testRange()
     {
+        $this->assertTrue(Validator::range(-5, -10, -1));
+        $this->assertTrue(Validator::range(-5, null, -1));
+        $this->assertTrue(Validator::range(-5, -10));
         $this->assertTrue(Validator::range(-1, null, 23));
+        $this->assertFalse(Validator::range(-15, -10, -1));
+        $this->assertFalse(Validator::range(-15, -10, null));
+        $this->assertFalse(Validator::range(-15, null, -16));
         $this->assertTrue(Validator::range(15, 3, 23));
+        $this->assertTrue(Validator::range(15, null, 23));
+        $this->assertTrue(Validator::range(15, 3));
         $this->assertTrue(Validator::range(23423, 3));
-        $this->assertTrue(Validator::range(0xd3a743f2ab, 0xa0));
-        $this->assertTrue(Validator::range('#aaffff', '#00ffff'));
-        $this->assertTrue(Validator::range('#aaffff', '#00ffff', '#bbffff'));
-        $this->assertTrue(Validator::range(0555, 0333, 0777));
-        $this->assertTrue(Validator::range(0b1110, 0b0000, 0b1111));
-
+        $this->assertFalse(Validator::range(15, 16, 23));
+        $this->assertFalse(Validator::range(15, 16));
+        $this->assertFalse(Validator::range(15, 1, 14));
+        $this->assertFalse(Validator::range(15, null, 14));
         $this->assertFalse(Validator::range(23423, null, 23));
         $this->assertFalse(Validator::range(2, 3, 23));
         $this->assertFalse(Validator::range(2, 3));
+
+        $this->assertTrue(Validator::range(0xd3a743f2ab, 0xa0));
+        $this->assertFalse(Validator::range(0xd3a743f2ab, 0xd3a743f2bb));
+        $this->assertFalse(Validator::range(0xd3a743f2ab, null, 0xd3a743f2aa));
+        $this->assertTrue(Validator::range(0xd3a743f2ab, 0xa0, 0xd3a743f2ff));
+        $this->assertTrue(Validator::range(0xd3a743f2ab, null, 0xd3a743f2ff));
+        $this->assertTrue(Validator::range('#aaffff', '#00ffff'));
+        $this->assertTrue(Validator::range('#aaffff', '#00ffff', '#bbffff'));
+        $this->assertTrue(Validator::range('#aaffff', null, '#bbffff'));
         $this->assertFalse(Validator::range(0xd3a743f2ab, 0xffffffffff));
         $this->assertFalse(Validator::range('#aaffff', '#ffffff'));
+        $this->assertFalse(Validator::range('#aaffff', null, '#aaafff'));
+
+        $this->assertTrue(Validator::range(0555, 0333, 0777));
+        $this->assertTrue(Validator::range(0555, null, 0777));
+        $this->assertTrue(Validator::range(0555, 0333));
+        $this->assertFalse(Validator::range(0555, 0666));
+        $this->assertFalse(Validator::range(0555, null, 0444));
+        $this->assertFalse(Validator::range(0555, 0444, 0444));
+
+        $this->assertTrue(Validator::range(0b1110, 0b0000, 0b1111));
+        $this->assertTrue(Validator::range(0b1110, null, 0b1111));
+        $this->assertTrue(Validator::range(0b1110, 0b0000));
+        $this->assertFalse(Validator::range(0b1110, 0b1111, 0b1111));
+        $this->assertFalse(Validator::range(0b1110, null, 0b01));
+        $this->assertFalse(Validator::range(0b1110, 0b1111));
+
     }
 
     public function testStringLength()
@@ -203,7 +239,6 @@ class ValidatorTest extends TestCase
     {
         $this->assertTrue(Validator::step(15, 5, 5));
         $this->assertFalse(Validator::step(12, 5));
-        $this->assertFalse(Validator::step(12, 'a'));
     }
 
     /**

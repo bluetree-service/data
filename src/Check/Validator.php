@@ -209,9 +209,9 @@ class Validator
      * check range on numeric values
      * allows to check decimal, hex, octal an binary values
      *
-     * @param int|string|float $value
-     * @param mixed $min minimal string length, if null don't check
-     * @param mixed $max maximal string length, if null don't check
+     * @param float|int|string $value
+     * @param float|int|string|null $min minimal string length, if null don't check
+     * @param float|int|string|null $max maximal string length, if null don't check
      * @example range(23423, null, 23)
      * @example range(23423, 3, 23)
      * @example range(23423, 3)
@@ -219,7 +219,7 @@ class Validator
      * @example range('#aaffff', 3)
      * @return bool
      */
-    public static function range(int|string|float $value, $min = null, $max = null): bool
+    public static function range(float|int|string $value, float|int|string|null $min = null, float|int|string|null $max = null): bool
     {
         [$value, $min, $max] = self::getProperValues($value, $min, $max);
 
@@ -242,14 +242,14 @@ class Validator
      * check PESEL number format
      * also set sex of person in $peselSex variable
      *
-     * @param mixed $value
+     * @param string $value
      * @return bool
      */
-    public static function pesel($value): bool
+    public static function pesel(string $value): bool
     {
-        $value = preg_replace('#[\\s-]#', '', (string)$value);
+        $value = preg_replace('#[\\s-]#', '', $value);
 
-        if (!preg_match('#^\d{11}$#', (string)$value)) {
+        if (!preg_match('#^\d{11}$#', $value)) {
             return false;
         }
 
@@ -269,12 +269,12 @@ class Validator
     /**
      * check REGON number format
      *
-     * @param mixed $value
+     * @param string $value
      * @return bool
      */
-    public static function regon($value): bool
+    public static function regon(string $value): bool
     {
-        $value = preg_replace('#[\\s-]#', '', (string)$value);
+        $value = preg_replace('#[\\s-]#', '', $value);
         $length = strlen($value);
 
         if (!($length === 9 || $length === 14)) {
@@ -297,12 +297,12 @@ class Validator
     /**
      * check account number format in NRB standard
      *
-     * @param mixed $value
+     * @param string $value
      * @return bool
      */
-    public static function nrb($value): bool
+    public static function nrb(string $value): bool
     {
-        $iNRB = preg_replace('#[\\s\- ]#', '', (string)$value);
+        $iNRB = preg_replace('#[\\s\-]#', '', $value);
 
         if (strlen($iNRB) !== 26) {
             return false;
@@ -326,10 +326,10 @@ class Validator
     /**
      * check account number format in IBAN standard
      *
-     * @param mixed $value
+     * @param string $value
      * @return bool
      */
-    public static function iban($value): bool
+    public static function iban(string $value): bool
     {
         $values = '';
         $mod = 0;
@@ -368,19 +368,11 @@ class Validator
      */
     public static function url(string $url, ?int $type = null): bool
     {
-        switch ($type) {
-            case 1:
-                $regType = self::$regularExpressions['url_extend'];
-                break;
-
-            case 2:
-                $regType = self::$regularExpressions['url_full'];
-                break;
-
-            default:
-                $regType = self::$regularExpressions['url'];
-                break;
-        }
+        $regType = match ($type) {
+            1 => self::$regularExpressions['url_extend'],
+            2 => self::$regularExpressions['url_full'],
+            default => self::$regularExpressions['url'],
+        };
 
         return (bool)preg_match($regType, $url);
     }
@@ -389,10 +381,10 @@ class Validator
      * check phone number format
      * eg +48 ( 052 ) 131 231-2312
      *
-     * @param mixed $phone
+     * @param string $phone
      * @return bool
      */
-    public static function phone($phone): bool
+    public static function phone(string $phone): bool
     {
         return (bool)preg_match(self::$regularExpressions['phone'], $phone);
     }
@@ -407,46 +399,33 @@ class Validator
      * @example step(15, 5, 5) true
      * @example step(12, 5) false
      */
-    public static function step($value, $step, $default = 0): bool
+    public static function step(int|float $value, int|float $step, int|float $default = 0): bool
     {
-        if (
-            !self::valid((string)$step, 'rational')
-            || !self::valid((string)$default, 'rational')
-            || !self::valid((string)$value, 'rational')
-        ) {
-            return false;
-        }
-
         return !((abs($value) - abs($default)) % $step);
     }
 
     /**
-     * @param mixed $value
-     * @param mixed $min
-     * @param mixed $max
+     * @param float|int|string|null $value
+     * @param float|int|string|null $min
+     * @param float|int|string|null $max
      * @return array
      */
-    protected static function getProperValues($value, $min, $max): array
+    protected static function getProperValues(float|int|string|null $value, float|int|string|null $min, float|int|string|null $max): array
     {
         if (self::isHex($min, $max)) {
             $value = hexdec(str_replace('#', '', $value));
-            $min = hexdec(str_replace('#', '', $min));
-            $max = hexdec(str_replace('#', '', $max));
+            $min = $min ? hexdec(str_replace('#', '', $min)) : null;
+            $max = $max ? hexdec(str_replace('#', '', $max)) : null;
+        }
+        
+        if (!is_null($min)) {
+            $min = (float)$min;
+        }
+        if (!is_null($max)) {
+            $max = (float)$max;
         }
 
-        if (self::isOctal($min, $max)) {
-            $value = octdec($value);
-            $min = octdec($min);
-            $max = octdec($max);
-        }
-
-        if (self::isBin($min, $max)) {
-            $value = bindec($value);
-            $min = bindec($min);
-            $max = bindec($max);
-        }
-
-        return [$value, $min, $max];
+        return [(float)$value, $min, $max];
     }
 
     /**
@@ -454,38 +433,18 @@ class Validator
      * @param mixed $max
      * @return bool
      */
-    protected static function isHex($min, $max): bool
+    protected static function isHex(mixed $min, mixed $max): bool
     {
         return (self::validKey('hex', $min) || self::validKey('hex2', $min))
-            && (self::validKey('hex', $max) || self::validKey('hex2', $max));
-    }
-
-    /**
-     * @param mixed $min
-     * @param mixed $max
-     * @return bool
-     */
-    protected static function isOctal($min, $max): bool
-    {
-        return self::validKey('octal', $min) && self::validKey('octal', $max);
-    }
-
-    /**
-     * @param mixed $min
-     * @param mixed $max
-     * @return bool
-     */
-    protected static function isBin($min, $max): bool
-    {
-        return self::validKey('binary', $min) && self::validKey('binary', $max);
+            || (self::validKey('hex', $max) || self::validKey('hex2', $max));
     }
 
     /**
      * @param string $key
-     * @param int|float|double $value
+     * @param mixed $value
      * @return int
      */
-    protected static function validKey($key, $value): int
+    protected static function validKey(string $key, mixed $value): int
     {
         return preg_match(self::$regularExpressions[$key], (string)$value);
     }

@@ -44,6 +44,13 @@ class MathTest extends TestCase
         $this->assertEquals(0, Math::end(1000, 0, $startTime, $currentTime));
     }
 
+    public function testMedianWithException()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cannot calculate median of empty array.');
+        Math::median([]);
+    }
+
     /**
      * @param array $data
      * @param array $result

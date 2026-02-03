@@ -99,32 +99,18 @@ class Xml extends DOMDocument
      */
     protected function loadAndValid(string $path, bool $parse): bool
     {
-        $bool = false;
-        $additional = '';
-
-        try {
-            $bool = $this->load($path);
-        } catch (\Throwable $exception) {
-            $additional = ': ' . $exception->getMessage();
-        }
+        $bool = $this->load($path);
 
         if (!$bool) {
-            $this->error = 'loading_file_error' . $additional;
+            $this->error = 'loading_file_error';
             return false;
         }
 
         if ($parse) {
-            $validate = false;
-            $additional = '';
-
-            try {
-                $validate = $this->validate();
-            } catch (\Throwable $exception) {
-                $additional = ': ' . $exception->getMessage();
-            }
+            $validate = $this->validate();
 
             if (!$validate) {
-                $this->error = 'parse_file_error' . $additional;
+                $this->error = 'parse_file_error';
                 return false;
             }
         }
@@ -141,22 +127,15 @@ class Xml extends DOMDocument
      * @example saveXmlFile('path/filename.xml'); save to file
      * @example saveXmlFile() will return as simple text
      */
-    public function saveXmlFile(string $path = '')
+    public function saveXmlFile(string $path = ''): string|bool
     {
         $this->formatOutput = true;
 
         if ($path) {
-            $bool = false;
-            $additional = '';
-
-            try {
-                $bool = $this->save($path);
-            } catch (\Throwable $exception) {
-                $additional = ': ' . $exception->getMessage();
-            }
+            $bool = $this->save($path);
 
             if (!$bool) {
-                $this->error = 'save_file_error' . $additional;
+                $this->error = 'save_file_error';
                 return false;
             }
 
@@ -221,7 +200,7 @@ class Xml extends DOMDocument
      * @param string $value attribute value to search
      * @return array
      */
-    public function searchByAttribute(DOMNodeList $node, $value)
+    public function searchByAttribute(DOMNodeList $node, string $value): array
     {
         return $this->searchByAttributeRecurrent($node, $value);
     }
